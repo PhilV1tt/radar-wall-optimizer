@@ -91,6 +91,7 @@ class GAConfig:
 
     # ── Critère d'arrêt anticipé ──────────────────────────────────────────────
     fitness_threshold: Optional[float] = None  # Arrêt si best ≤ seuil
+    time_budget: Optional[float] = None        # Budget en secondes (None = illimité)
 
     def __post_init__(self):
         if self.mutation_rate is None:
@@ -375,11 +376,19 @@ def _mp_eval(genome: np.ndarray) -> float:
 
 
 class ParallelEvaluator:
-    """Évaluateur parallèle via multiprocessing.Pool."""
+    """Évaluateur parallèle via multiprocessing.Pool.
+
+    Note : CuPy (GPU) est incompatible avec le fork multiprocessing
+    (cudaErrorInitializationError). Quand GPU_AVAILABLE est True, on
+    bascule automatiquement en évaluation séquentielle — le GPU parallélise
+    déjà les opérations matricielles internes.
+    """
 
     def __init__(self, fitness_fn: Callable, n_workers: int):
+        from src.utils.xp import GPU_AVAILABLE
         self.fitness_fn = fitness_fn
-        self.n_workers = n_workers
+        # Force sequential when GPU is active (CUDA context can't be forked)
+        self.n_workers = 1 if GPU_AVAILABLE else n_workers
         self._pool: Optional[mp.Pool] = None
 
     def evaluate(self, genomes: List[np.ndarray]) -> List[float]:
@@ -767,7 +776,7 @@ class GeneticAlgorithm:
             if checkpoint_fn is not None and self._hof.best is not None:
                 checkpoint_fn(gen + 1, self._hof.best)
 
-            # Arrêt anticipé
+            # Arrêt anticipé — seuil de fitness
             if (cfg.fitness_threshold is not None
                     and self._hof.best is not None
                     and self._hof.best.fitness <= cfg.fitness_threshold):
@@ -775,6 +784,16 @@ class GeneticAlgorithm:
                     display._progress.console.print(
                         f"[green]  Convergence atteinte (fitness ≤ "
                         f"{cfg.fitness_threshold:.2e})[/green]"
+                    )
+                break
+
+            # Arrêt anticipé — budget temps
+            if (cfg.time_budget is not None
+                    and time.perf_counter() - t0 >= cfg.time_budget):
+                if display:
+                    mins = cfg.time_budget / 60
+                    display._progress.console.print(
+                        f"[yellow]  Budget temps atteint ({mins:.0f} min)[/yellow]"
                     )
                 break
 
