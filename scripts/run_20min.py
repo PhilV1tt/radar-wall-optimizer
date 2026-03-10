@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Optimisation longue durée (~20 min) sur serveur 32 cœurs.
+Optimisation longue durée (~20 min) sur Apple M4 (10 cœurs, 16 Go RAM).
 
 Paramètres calibrés pour exploiter le multiprocessing et couvrir
 davantage l'espace de recherche avec plusieurs angles d'incidence.
@@ -45,28 +45,28 @@ WALL_THICKNESS = 4
 # 3 angles d'incidence pour robustesse angulaire
 INCIDENCE_ANGLES = [0.0, 15.0, -15.0]
 
-N_WORKERS = 16  # 16 workers sur 32 cœurs (laisse de la marge)
+N_WORKERS = 8  # 8 workers sur 10 cœurs M4 (laisse 2 pour le système)
 
-# GA : grande population, beaucoup de générations (~3-4 min)
+# GA : grande population, beaucoup de générations (~5-6 min)
 GA_CFG = GAConfig(
-    n_genes=N_SEGMENTS, pop_size=48, n_generations=120,
+    n_genes=N_SEGMENTS, pop_size=56, n_generations=150,
     crossover_rate=0.85, eta_c=10.0,
     eta_m=20.0, adaptive_mutation=True,
     elite_count=7, tournament_size=3,
     n_workers=N_WORKERS,
 )
 
-# CMA-ES : warm start depuis GA, affinement (~2 min)
+# CMA-ES : warm start depuis GA, affinement (~3 min)
 CMA_CFG = CMAConfig(
-    n_params=N_SEGMENTS, sigma0=0.4, max_iter=100,
-    pop_size=32, param_min=-1.0, param_max=1.0, n_workers=N_WORKERS,
+    n_params=N_SEGMENTS, sigma0=0.4, max_iter=80,
+    pop_size=24, param_min=-1.0, param_max=1.0, n_workers=N_WORKERS,
 )
 
-# RL : beaucoup d'épisodes, séquentiel (~13-14 min)
+# RL : beaucoup d'épisodes (~10-11 min)
 RL_CFG = RLConfig(
-    n_params=N_SEGMENTS, n_episodes=90, steps_per_episode=5,
+    n_params=N_SEGMENTS, n_episodes=100, steps_per_episode=5,
     learning_rate=0.005, gamma=0.95, action_std_init=0.4,
-    action_std_min=0.05, std_decay=0.99, n_rollouts=4,
+    action_std_min=0.05, std_decay=0.99, n_rollouts=5,
 )
 
 
@@ -254,7 +254,7 @@ def run_comparison(flat_fitness, ga_best, ga_history,
 
 def main():
     print("╔════════════════════════════════════════════════════════════════════╗")
-    print("║  OPTIMISATION LONGUE DURÉE — SERVEUR 32 CŒURS                    ║")
+    print("║  OPTIMISATION LONGUE DURÉE — APPLE M4 (10 CŒURS)                ║")
     print("║  FDTD 2D TMz + GA + CMA-ES + RL  (~20 min)                      ║")
     print("╠════════════════════════════════════════════════════════════════════╣")
     print(f"║  Fréquence radar : {FDTD_CFG.freq/1e9:.0f} GHz (bande X)                         ║")

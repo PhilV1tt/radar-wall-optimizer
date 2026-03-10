@@ -13,6 +13,8 @@ Ce script orchestre l'ensemble du pipeline :
 4. Optimisation par CMA-ES (warm start depuis GA)
 5. Optimisation par Reinforcement Learning (RL)
 6. Comparaison des résultats et visualisation
+
+Paramètres calibrés pour Apple M4 (10 cœurs, 16 Go RAM).
 ================================================================================
 """
 
@@ -51,25 +53,33 @@ N_SEGMENTS = 16
 WALL_HEIGHT = 50
 WALL_THICKNESS = 4
 
+# Apple M4 : 8 workers (laisse 2 cœurs pour le système)
+N_WORKERS = 8
+
+# GA : population calibrée pour 8 workers (pop_size multiple de N_WORKERS)
 GA_CFG = GAConfig(
-    n_genes=N_SEGMENTS, pop_size=20, n_generations=25,
+    n_genes=N_SEGMENTS, pop_size=40, n_generations=80,
     crossover_rate=0.85, eta_c=10.0,
     eta_m=20.0, adaptive_mutation=True,
-    elite_count=3, tournament_size=3,
+    elite_count=5, tournament_size=3,
+    n_workers=N_WORKERS,
 )
 
-RL_CFG = RLConfig(
-    n_params=N_SEGMENTS, n_episodes=40, steps_per_episode=4,
-    learning_rate=0.005, gamma=0.95, action_std_init=0.4,
-    action_std_min=0.05, std_decay=0.99, n_rollouts=3,
-)
-
+# CMA-ES : warm start depuis GA, affinement parallèle
 CMA_CFG = CMAConfig(
-    n_params=N_SEGMENTS, sigma0=0.5, max_iter=30,
-    pop_size=0, param_min=-1.0, param_max=1.0, n_workers=0,
+    n_params=N_SEGMENTS, sigma0=0.4, max_iter=60,
+    pop_size=24, param_min=-1.0, param_max=1.0, n_workers=N_WORKERS,
 )
 
-INCIDENCE_ANGLES = [0.0]
+# RL : plus d'épisodes grâce au gain en temps sur GA/CMA-ES
+RL_CFG = RLConfig(
+    n_params=N_SEGMENTS, n_episodes=60, steps_per_episode=5,
+    learning_rate=0.005, gamma=0.95, action_std_init=0.4,
+    action_std_min=0.05, std_decay=0.99, n_rollouts=4,
+)
+
+# 3 angles pour robustesse angulaire (exploite le parallélisme)
+INCIDENCE_ANGLES = [0.0, 15.0, -15.0]
 
 
 # ==============================================================================
@@ -256,12 +266,14 @@ def run_comparison(flat_fitness, ga_best, ga_history,
 def main():
     print("╔════════════════════════════════════════════════════════════════════╗")
     print("║  OPTIMISATION DE GÉOMÉTRIE DE MUR ANTI-RADAR                     ║")
-    print("║  FDTD 2D TMz + Algorithme Génétique + Reinforcement Learning     ║")
+    print("║  FDTD 2D TMz + GA + CMA-ES + RL  — Apple M4 (10 cœurs)         ║")
     print("╠════════════════════════════════════════════════════════════════════╣")
     print(f"║  Fréquence radar : {FDTD_CFG.freq/1e9:.0f} GHz (bande X)                         ║")
     print(f"║  Longueur d'onde : {FDTD_CFG.wavelength*100:.2f} cm                               ║")
     print(f"║  Grille FDTD     : {FDTD_CFG.nx}x{FDTD_CFG.ny} cellules                          ║")
     print(f"║  Segments du mur : {N_SEGMENTS}                                            ║")
+    print(f"║  Workers         : {N_WORKERS}                                             ║")
+    print(f"║  Angles          : {INCIDENCE_ANGLES}                        ║")
     print("╚════════════════════════════════════════════════════════════════════╝")
 
     t0 = time.time()
