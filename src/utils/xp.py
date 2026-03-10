@@ -37,4 +37,11 @@ def to_numpy(arr):
 
 def report():
     """Affiche le backend actif."""
-    print(f"[xp] Backend : {BACKEND}")
+    try:
+        from rich.console import Console as _Console
+        _Console(highlight=False).print(
+            f"[dim]·[/dim] Backend calcul : "
+            f"[bold {'green' if GPU_AVAILABLE else 'yellow'}]{BACKEND}[/]"
+        )
+    except ImportError:
+        print(f"· Backend calcul : {BACKEND}")
