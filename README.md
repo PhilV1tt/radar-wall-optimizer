@@ -62,6 +62,8 @@ python run.py <preset> [options]
 --out DIR        Dossier de sortie (défaut : results/YYYYMMDD_HHMMSS/)
 --no-plots       Ne pas générer les graphiques matplotlib
 --checkpoint N   Sauvegarder un checkpoint tous les N générations (défaut : 25)
+--time MINUTES   Budget temps en minutes — arrête le GA proprement à la fin
+                 de la génération courante (compatible fast et medium)
 ```
 
 **Exemples :**
@@ -72,6 +74,12 @@ python run.py fast
 
 # 8 workers, graine fixe, dossier personnalisé
 python run.py medium --workers 8 --seed 42 --out results/mon_experience
+
+# GA pendant exactement 40 min (arrêt propre, résultats sauvegardés)
+python run.py medium --time 40
+
+# GA rapide pendant 10 min
+python run.py fast --time 10
 
 # Sans graphiques (serveur headless)
 python run.py medium --no-plots
