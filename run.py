@@ -13,6 +13,7 @@ Usage
 -----
   python run.py fast
   python run.py medium --workers 8 --seed 42
+  python run.py medium --time 40          # GA pendant 40 min, arrêt propre
   python run.py full
   python run.py validate
 
@@ -23,6 +24,8 @@ Options
   --out DIR       Dossier de sortie  (défaut : results/YYYYMMDD_HHMMSS/)
   --no-plots      Ne pas générer les graphiques matplotlib
   --checkpoint N  Sauvegarder un checkpoint tous les N générations (défaut : 25)
+  --time MINUTES  Budget temps en minutes (arrête le GA proprement à la fin
+                  de la génération courante). Compatible avec fast et medium.
 """
 
 import argparse
@@ -92,15 +95,18 @@ def preset_fast(args):
         return evaluate_wall(params, fdtd_cfg, n_segments=n_segments,
                              wall_height=40, wall_thickness=4)
 
+    time_budget = args.time * 60 if args.time else None
+    n_gen = int(1e6) if time_budget else 40
     ga_cfg = GAConfig(
         n_genes=n_segments,
         pop_size=24,
-        n_generations=40,
+        n_generations=n_gen,
         n_workers=workers,
         seed=args.seed,
         elite_count=2,
         n_hall_of_fame=5,
         stagnation_window=15,
+        time_budget=time_budget,
     )
     ga = GeneticAlgorithm(ga_cfg, fitness)
     best = ga.run(verbose=True,
@@ -132,15 +138,18 @@ def preset_medium(args):
                              wall_height=50, wall_thickness=4,
                              incidence_angles=incidence)
 
+    time_budget = args.time * 60 if args.time else None
+    n_gen = int(1e6) if time_budget else 100
     ga_cfg = GAConfig(
         n_genes=n_segments,
         pop_size=48,
-        n_generations=100,
+        n_generations=n_gen,
         n_workers=workers,
         seed=args.seed,
         elite_count=3,
         n_hall_of_fame=10,
         stagnation_window=20,
+        time_budget=time_budget,
     )
     ga = GeneticAlgorithm(ga_cfg, fitness)
     best = ga.run(verbose=True,
@@ -266,6 +275,8 @@ def main():
                         help="Ne pas générer les graphiques")
     parser.add_argument("--checkpoint", type=int, default=25, metavar="N",
                         help="Sauvegarder un checkpoint tous les N générations (défaut : 25)")
+    parser.add_argument("--time", type=float, default=None, metavar="MINUTES",
+                        help="Budget temps en minutes (arrêt propre à la fin de la génération)")
     args = parser.parse_args()
 
     dispatch = {
