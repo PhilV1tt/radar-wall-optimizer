@@ -3,3 +3,10 @@ __pycache__/
 *.pyo
 .DS_Store
 .vscode/
+.pytest_cache/
+results/
+*.npz
+*.mp4
+*.log
+.claude/
+CLAUDE_CODE_PROMPT.md
