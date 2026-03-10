@@ -2,7 +2,8 @@
 DFT running, NTFF (Near-to-Far-Field Transform) et calcul de RCS.
 """
 
-import numpy as np
+import numpy as _numpy
+from src.utils.xp import xp as np, to_numpy
 from typing import Tuple
 from src.fdtd.config import C0, MU0
 
@@ -162,7 +163,7 @@ def compute_rcs_backscatter(dft_state, source, time_step, cfg) -> float:
         return 1e6
 
     rcs = (k / (4.0 * np.pi)) * abs(Ez_far)**2 / abs(E_inc_spectrum)**2
-    return rcs / cfg.wavelength
+    return float(rcs / cfg.wavelength)
 
 
 def compute_backscatter_energy(Ez, cfg) -> float:
@@ -179,7 +180,7 @@ def compute_backscatter_energy(Ez, cfg) -> float:
     measure_y = slice(measure_y_start, measure_y_end)
 
     scattered_energy = np.sum(Ez[measure_x, measure_y]**2)
-    return scattered_energy
+    return float(scattered_energy)
 
 
 def compute_bistatic_rcs(dft_state, source, time_step, cfg,
@@ -198,4 +199,4 @@ def compute_bistatic_rcs(dft_state, source, time_step, cfg,
         Ez_far = compute_ntff(dft_state, phi, cfg)
         rcs[a_idx] = (k / (4*np.pi)) * abs(Ez_far)**2 / abs(E_inc)**2
 
-    return angles, rcs / cfg.wavelength
+    return to_numpy(angles), to_numpy(rcs / cfg.wavelength)
