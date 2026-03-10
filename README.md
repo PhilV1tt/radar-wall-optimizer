@@ -23,10 +23,118 @@ Onde plane incidente → Simulation FDTD 2D → Calcul RCS → Optimisation → 
 
 ---
 
+## Démarrage rapide
+
+```bash
+git clone https://github.com/PhilV1tt/radar-wall-optimizer.git
+cd radar-wall-optimizer
+pip install -r requirements.txt
+
+# Lancer une optimisation rapide (~3 min)
+python run.py fast
+
+# Pipeline complet avec visualisations (~20 min)
+python run.py medium
+```
+
+---
+
+## CLI — `run.py`
+
+Point d'entrée unifié avec quatre presets :
+
+```
+python run.py <preset> [options]
+```
+
+| Preset | Durée | Description |
+|---|---|---|
+| `fast` | ~3 min | GA rapide, petite grille — feedback de développement |
+| `medium` | ~20 min | GA complet + graphiques de convergence et de champ |
+| `full` | ~40 min | GA + CMA-ES + RL + comparaison complète |
+| `validate` | ~5 min | Tests de convergence physique FDTD |
+
+**Options :**
+
+```
+--workers N      Nombre de workers parallèles (défaut : cpu // 2)
+--seed N         Graine aléatoire pour la reproductibilité
+--out DIR        Dossier de sortie (défaut : results/YYYYMMDD_HHMMSS/)
+--no-plots       Ne pas générer les graphiques matplotlib
+--checkpoint N   Sauvegarder un checkpoint tous les N générations (défaut : 25)
+```
+
+**Exemples :**
+
+```bash
+# Lancement standard
+python run.py fast
+
+# 8 workers, graine fixe, dossier personnalisé
+python run.py medium --workers 8 --seed 42 --out results/mon_experience
+
+# Sans graphiques (serveur headless)
+python run.py medium --no-plots
+
+# Tests de validation FDTD
+python run.py validate
+```
+
+Chaque run crée automatiquement un sous-dossier horodaté dans `results/` avec :
+- `best_<preset>.npz` — meilleur génome + historique de convergence
+- `checkpoint_genNNNN.npz` — checkpoints intermédiaires (reprise en cas de crash)
+- `convergence_<preset>.png` — courbe de convergence (si `--no-plots` non activé)
+- `field_<preset>.png` — champ électrique optimal + géométrie du mur
+
+---
+
+## Affichage terminal
+
+L'optimisation affiche en temps réel un panel de configuration, une table de générations et une barre de progression avec ETA :
+
+```
+╭────────────── GA · Optimisation mur anti-radar ──────────────╮
+│ Population            48 individus · 100 générations         │
+│ Gènes                 16 · bornes [-1.0, 1.0]                │
+│ Croisement            SBX η_c=10 · p_c=0.90                  │
+│ Mutation              PM adaptatif 1/5 · η_m=20 · p_m=0.0625 │
+│ Sélection             tournoi k=3                            │
+│ Évaluation            8 workers                              │
+│ Backend               NumPy (CPU)                            │
+╰──────────────────────────────────────────────────────────────╯
+    Gen           Best           Mean          Std      Div    η_m   Succ  Info
+────────────────────────────────────────────────────────────────────────────────
+      0   2.134e-01   2.589e-01   4.256e-02   1.0000   20.0     —   init
+      1   1.987e-01   2.412e-01   3.892e-02   0.9876   17.0   21%   9.2s
+      2   1.654e-01   2.198e-01   3.102e-02   0.9432   14.5   28%   9.1s
+ ─ 3/100 ━━━━━━━━━━━━━ 3% 0:00:27 · 0:14:13 · 1.65e-01 ─
+```
+
+---
+
+## Accélération GPU
+
+Le projet détecte automatiquement le backend de calcul au démarrage :
+
+- **GPU NVIDIA (CUDA)** → CuPy (accélération GPU)
+- **CPU** (macOS Apple Silicon, CI, pas de CUDA) → NumPy
+
+Pour activer CuPy sur une machine NVIDIA, installer selon la version CUDA :
+
+```bash
+pip install cupy-cuda12x   # CUDA 12.x
+pip install cupy-cuda11x   # CUDA 11.x
+```
+
+Aucune modification du code n'est nécessaire — la détection est automatique.
+
+---
+
 ## Architecture du projet
 
 ```
 radar-wall-optimizer/
+├── run.py                  # Point d'entrée unifié (CLI)
 ├── src/
 │   ├── fdtd/               # Simulation électromagnétique
 │   │   ├── config.py       # Paramètres physiques et configuration FDTD
@@ -40,24 +148,24 @@ radar-wall-optimizer/
 │   │   ├── cmaes.py        # CMA-ES (Covariance Matrix Adaptation)
 │   │   ├── rl_agent.py     # Apprentissage par renforcement (REINFORCE)
 │   │   └── fitness.py      # Wrapper d'évaluation FDTD
+│   ├── utils/
+│   │   ├── xp.py           # Détection GPU (CuPy / NumPy)
+│   │   └── console.py      # Affichage Rich (progress bar, panels)
 │   └── viz/                # Visualisation
 │       ├── plots.py        # Figures scientifiques
 │       ├── animation.py    # Animation temps réel
 │       └── dashboard.py    # Dashboard interactif
-├── scripts/
-│   ├── run_optimization.py # Pipeline complet (GA → CMA-ES → RL → comparaison)
-│   ├── run_20min.py        # Démo ~20 min (32 cœurs)
-│   ├── run_ga_20min.py     # GA uniquement
-│   ├── run_overnight.py    # Sweep complet (nuit)
+├── scripts/                # Scripts spécialisés (longues durées)
+│   ├── run_optimization.py # Pipeline complet (GA → CMA-ES → RL)
+│   ├── run_overnight.py    # Sweep nuit (5000 générations)
 │   ├── run_validation.py   # Tests de convergence physique
 │   └── live_demo.py        # Visualisation interactive
 ├── tests/
-│   ├── test_fdtd.py        # Tests simulation FDTD
-│   ├── test_ga.py          # Tests algorithme génétique
-│   └── test_ntff.py        # Tests calcul RCS
-├── results/                # Figures générées automatiquement
-├── requirements.txt
-└── pyproject.toml
+│   ├── test_fdtd.py
+│   ├── test_ga.py
+│   └── test_ntff.py
+├── results/                # Sorties générées (ignoré par git)
+└── requirements.txt
 ```
 
 ---
@@ -67,53 +175,12 @@ radar-wall-optimizer/
 **Prérequis :** Python 3.10+
 
 ```bash
-# Cloner le dépôt
-git clone https://github.com/PhilV1tt/radar-wall-optimizer.git
-cd radar-wall-optimizer
-
-# Installer les dépendances
 pip install -r requirements.txt
 
-# Optionnel : CMA-ES et SciPy
-pip install cma>=3.3 scipy>=1.11
-
-# Optionnel : tests
-pip install pytest
-```
-
----
-
-## Utilisation
-
-### Pipeline complet
-```bash
-python scripts/run_optimization.py
-```
-Lance la séquence complète : baseline → GA → CMA-ES → RL → figures comparatives.
-
-### Démo rapide (~20 min)
-```bash
-python scripts/run_20min.py
-```
-
-### Algorithme génétique uniquement
-```bash
-python scripts/run_ga_20min.py
-```
-
-### Visualisation en temps réel
-```bash
-python scripts/live_demo.py
-```
-
-### Tests de validation physique
-```bash
-python scripts/run_validation.py
-```
-
-### Tests unitaires
-```bash
-pytest tests/
+# Optionnel
+pip install cma>=3.3        # CMA-ES via bibliothèque officielle
+pip install scipy>=1.11     # Interpolation avancée
+pip install pytest          # Tests unitaires
 ```
 
 ---
@@ -122,11 +189,15 @@ pytest tests/
 
 | Algorithme | Forces | Paramètres clés |
 |---|---|---|
-| **Génétique (GA)** | Exploration globale, robuste aux minima locaux | `pop_size=20`, `n_generations=25`, SBX + mutation polynomiale |
-| **CMA-ES** | Convergence fine, adapte covariance et pas | Warm-start depuis GA, parallélisable |
-| **RL (REINFORCE)** | Capture corrélations entre segments | `n_episodes=40`, décroissance de σ |
+| **Génétique (GA)** | Exploration globale, robuste aux minima locaux | `pop_size`, `n_generations`, SBX + mutation polynomiale |
+| **CMA-ES** | Convergence fine, adapte covariance et pas | Warm-start depuis le meilleur GA |
+| **RL (REINFORCE)** | Capture les corrélations entre segments | `n_episodes`, décroissance de σ |
 
-Le GA utilise le **critère 1/5 de Rechenberg** pour l'adaptation automatique du taux de mutation, et une initialisation par **Latin Hypercube Sampling (LHS)** pour une couverture uniforme de l'espace de recherche.
+Le GA utilise :
+- **Latin Hypercube Sampling (LHS)** pour l'initialisation — couverture uniforme de l'espace
+- **SBX** (Simulated Binary Crossover) — croisement en continu
+- **Mutation polynomiale** avec critère **1/5 de Rechenberg** — adaptation automatique
+- **Redémarrage adaptatif** — détection de stagnation et collapse de diversité
 
 ---
 
@@ -137,7 +208,7 @@ FDTDConfig(
     nx=150, ny=150,     # Grille 150×150 cellules
     ppw=15,             # 15 points par longueur d'onde
     freq=10e9,          # 10 GHz (bande X)
-    courant=0.5,        # Nombre de Courant (stabilité)
+    courant=0.5,        # Nombre de Courant (stabilité CFL)
     n_steps=350,        # Pas temporels
 )
 ```
@@ -145,27 +216,8 @@ FDTDConfig(
 La simulation utilise :
 - **Grille de Yee** décalée (Ez aux nœuds entiers, Hx/Hy aux demi-nœuds)
 - **CPML** (Convolutional PML) pour absorber les ondes sortantes
-- **TFSF** pour injecter l'onde plane incidente
-- **Mur PEC** paramétrique à N points de contrôle (interpolation spline)
-
----
-
-## Résultats
-
-Les figures sont sauvegardées dans `results/` :
-
-| Fichier | Contenu |
-|---|---|
-| `01_baseline_snapshots.png` | Instantanés du champ Ez (mur plat) |
-| `02_baseline_final.png` | État final baseline |
-| `03_ga_convergence.png` | Courbe de convergence GA |
-| `04_ga_profile.png` | Profil de mur optimal (GA) |
-| `05_ga_field.png` | Carte de champ après GA |
-| `06_rl_convergence.png` | Convergence RL |
-| `07_rl_profile.png` | Profil optimal (RL) |
-| `08_rl_field.png` | Carte de champ après RL |
-| `09_comparison.png` | Comparaison GA / RL / baseline |
-| `10_summary.png` | Résumé du projet |
+- **TFSF** pour injecter l'onde plane incidente à angle variable
+- **Mur PEC** paramétrique à N points de contrôle
 
 ---
 
@@ -173,17 +225,19 @@ Les figures sont sauvegardées dans `results/` :
 
 - **Yee, K.S.** (1966) — Algorithme FDTD original
 - **Deb & Agrawal** (1995) — Simulated Binary Crossover (SBX)
-- **Deb & Goyal** (1996) — Mutation polynomiale
+- **Deb & Goyal** (1996) — Mutation polynomiale bornée
 - **Rechenberg, I.** (1973) — Critère 1/5 pour l'adaptation du pas
 - **McKay et al.** (1979) — Latin Hypercube Sampling
-- **Baker, J.E.** (1985) — Sélection par rang
+- **Baker, J.E.** (1985) — Sélection par rang linéaire
 
 ---
 
 ## Stack technique
 
 - **Python 3.10+**
-- **NumPy ≥ 1.24** — calculs numériques
+- **NumPy ≥ 1.24** — calculs numériques (CPU)
 - **Matplotlib ≥ 3.7** — visualisation scientifique
+- **Rich ≥ 13.0** — affichage terminal
+- **CuPy** *(optionnel)* — accélération GPU NVIDIA
 - **CMA ≥ 3.3** *(optionnel)* — CMA-ES
 - **SciPy ≥ 1.11** *(optionnel)* — interpolation avancée
