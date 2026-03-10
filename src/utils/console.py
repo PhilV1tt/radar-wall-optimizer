@@ -6,6 +6,7 @@ Usage dans les autres modules :
 """
 from __future__ import annotations
 import math
+import time
 from typing import TYPE_CHECKING, Optional
 
 from rich.console import Console
@@ -45,11 +46,19 @@ class GADisplay:
         self._progress: Optional[Progress] = None
         self._task_id = None
         self._best = float("inf")
+        self._t0: float = 0.0
+        self._time_mode: bool = bool(cfg.time_budget)  # True = avance sur le temps
 
     def start(self):
         from src.utils.xp import BACKEND
         cfg = self._cfg
-        parallel = f"{cfg.n_workers} workers" if cfg.n_workers > 1 else "séquentiel"
+        from src.utils.xp import GPU_AVAILABLE
+        if GPU_AVAILABLE:
+            parallel = "séquentiel (GPU — CUDA interdit avec fork)"
+        elif cfg.n_workers > 1:
+            parallel = f"{cfg.n_workers} workers"
+        else:
+            parallel = "séquentiel"
         mut = (f"PM adaptatif 1/5 · η_m={cfg.eta_m:.0f}"
                if cfg.adaptive_mutation else f"PM fixe · η_m={cfg.eta_m:.0f}")
         sel = (f"tournoi k={cfg.tournament_size}"
@@ -59,8 +68,13 @@ class GADisplay:
         grid = Table.grid(padding=(0, 2))
         grid.add_column(style="bold cyan", min_width=20)
         grid.add_column()
+        if self._time_mode:
+            pop_info = f"{cfg.pop_size} individus · {cfg.time_budget / 60:.4g} min max"
+        else:
+            pop_info = f"{cfg.pop_size} individus · {cfg.n_generations} générations"
+
         for key, val in [
-            ("Population",  f"{cfg.pop_size} individus · {cfg.n_generations} générations"),
+            ("Population",  pop_info),
             ("Gènes",       f"{cfg.n_genes} · bornes [{cfg.gene_min}, {cfg.gene_max}]"),
             ("Croisement",  f"SBX η_c={cfg.eta_c:.0f} · p_c={cfg.crossover_rate:.2f}"),
             ("Mutation",    f"{mut} · p_m={cfg.mutation_rate:.4f}"),
@@ -76,6 +90,15 @@ class GADisplay:
         console.print(f"[dim]{self._HEADER}[/dim]")
         console.rule(style="dim blue")
 
+        self._t0 = time.perf_counter()
+
+        if self._time_mode:
+            bar_total = int(cfg.time_budget)
+            desc_init = f"0 gen · 0/{cfg.time_budget / 60:.0f}min"
+        else:
+            bar_total = cfg.n_generations
+            desc_init = f"0/{cfg.n_generations}"
+
         self._progress = Progress(
             SpinnerColumn(style="blue"),
             TextColumn("[bold cyan]{task.description}"),
@@ -89,7 +112,7 @@ class GADisplay:
         )
         self._progress.start()
         self._task_id = self._progress.add_task(
-            f"0/{cfg.n_generations}", total=cfg.n_generations, best="—",
+            desc_init, total=bar_total, best="—",
         )
 
     def update(self, gen: int, history: dict, dt: float, restarted: bool):
@@ -119,12 +142,28 @@ class GADisplay:
             f"{div:>7.4f}  {eta_m:>7.1f}  {sr_str:>6}  {info_str}"
         )
         self._progress.console.print(f"[{style}]{row}[/{style}]" if style else row)
-        self._progress.update(
-            self._task_id,
-            advance=1,
-            description=f"{gen}/{self._cfg.n_generations}",
-            best=f"{self._best:.3e}",
-        )
+        if self._time_mode:
+            elapsed = time.perf_counter() - self._t0
+            budget = self._cfg.time_budget
+            elapsed_min = elapsed / 60
+            budget_min = budget / 60
+            # advance = elapsed since last update (rich tracks completed vs total)
+            task = self._progress.tasks[self._task_id]
+            new_completed = min(elapsed, budget)
+            advance = new_completed - task.completed
+            self._progress.update(
+                self._task_id,
+                advance=advance,
+                description=f"{gen} gen · {elapsed_min:.1f}/{budget_min:.4g}min",
+                best=f"{self._best:.3e}",
+            )
+        else:
+            self._progress.update(
+                self._task_id,
+                advance=1,
+                description=f"{gen}/{self._cfg.n_generations}",
+                best=f"{self._best:.3e}",
+            )
 
     def finish(self, elapsed: float, ga: "GeneticAlgorithm"):
         self._progress.stop()
