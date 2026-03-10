@@ -2,7 +2,7 @@
 Fonctions de géométrie du mur et matériaux (PEC, RAM).
 """
 
-import numpy as np
+from src.utils.xp import xp as np
 from src.fdtd.config import EPS0
 
 
