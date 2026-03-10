@@ -1,0 +1,5 @@
+numpy>=1.24
+matplotlib>=3.7
+# Optionnel :
+# cma>=3.3      # Pour CMA-ES via la bibliothèque officielle
+# scipy>=1.11   # Pour des fonctions supplémentaires
