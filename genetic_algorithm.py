@@ -1,34 +1,3 @@
-"""
-================================================================================
-Module Algorithme Génétique — Optimisation de la géométrie du mur
-================================================================================
-
-Implémente un algorithme génétique (GA) pour trouver le profil de surface
-du mur qui minimise la section efficace radar (RCS) en rétrodiffusion.
-
-Pourquoi un GA plutôt que le RL ?
----------------------------------
-L'optimisation de la géométrie d'un mur est un problème de recherche dans un 
-espace de solutions STATIQUES. Il n'y a pas de séquence de décisions, pas 
-d'interaction temporelle avec un environnement, pas de politique à apprendre.
-
-Le GA est naturellement adapté car :
-1. L'espace de recherche est un vecteur réel (profil du mur)
-2. La fitness est une fonction scalaire (RCS)
-3. Pas besoin de gradient (la simulation FDTD n'est pas différentiable)
-4. Le GA explore efficacement des paysages multimodaux
-5. Parallélisation triviale (chaque individu est indépendant)
-
-Opérateurs génétiques
----------------------
-- Sélection : tournoi binaire
-- Croisement : BLX-α (Blend Crossover) — adapté aux variables réelles
-- Mutation : gaussienne avec auto-adaptation du pas
-- Élitisme : les meilleurs individus survivent automatiquement
-
-Référence : Goldberg (1989), Holland (1975)
-================================================================================
-"""
 
 import numpy as np
 from typing import Callable, List, Tuple, Optional
@@ -38,29 +7,6 @@ import time
 
 @dataclass
 class GAConfig:
-    """Configuration de l'algorithme génétique.
-    
-    Paramètres
-    ----------
-    n_genes : int
-        Dimension du génome (nombre de segments de contrôle du mur).
-    pop_size : int
-        Taille de la population.
-    n_generations : int
-        Nombre de générations.
-    mutation_rate : float
-        Probabilité de mutation par gène.
-    mutation_sigma : float
-        Écart-type initial de la mutation gaussienne.
-    crossover_rate : float
-        Probabilité de croisement.
-    elite_fraction : float
-        Fraction de la population préservée par élitisme.
-    gene_min, gene_max : float
-        Bornes des gènes. On utilise [-1, 1] normalisé.
-    tournament_size : int
-        Taille du tournoi pour la sélection.
-    """
     n_genes: int = 20
     pop_size: int = 100
     n_generations: int = 500
@@ -74,15 +20,6 @@ class GAConfig:
 
 
 class Individual:
-    """Un individu de la population = un profil de mur candidat.
-    
-    Attributs
-    ---------
-    genome : np.ndarray
-        Vecteur de gènes dans [gene_min, gene_max].
-    fitness : float
-        Valeur de fitness (RCS — à minimiser).
-    """
     
     def __init__(self, genome: np.ndarray, fitness: float = np.inf):
         self.genome = genome.copy()
@@ -93,31 +30,8 @@ class Individual:
 
 
 class GeneticAlgorithm:
-    """Algorithme génétique pour l'optimisation de géométrie.
-    
-    L'algorithme suit le cycle classique :
-    
-    1. Initialisation aléatoire de la population
-    2. Évaluation de la fitness (simulation FDTD)
-    3. Sélection (tournoi)
-    4. Croisement (BLX-α)
-    5. Mutation (gaussienne)
-    6. Élitisme
-    7. Retour à l'étape 2
-    
-    La fitness est la RCS en rétrodiffusion : plus elle est basse, mieux c'est.
-    """
     
     def __init__(self, config: GAConfig, fitness_fn: Callable[[np.ndarray], float]):
-        """
-        Paramètres
-        ----------
-        config : GAConfig
-            Configuration du GA.
-        fitness_fn : callable
-            Fonction qui prend un génome (np.ndarray) et retourne la fitness (float).
-            Cette fonction encapsule la simulation FDTD.
-        """
         self.cfg = config
         self.fitness_fn = fitness_fn
         self.population: List[Individual] = []
