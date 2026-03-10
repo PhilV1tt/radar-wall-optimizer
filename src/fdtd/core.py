@@ -2,7 +2,8 @@
 Classe FDTD2D_TMz allégée — importe depuis config, pml, tfsf, materials, ntff.
 """
 
-import numpy as np
+import numpy
+from src.utils.xp import xp as np, to_numpy
 from typing import Optional, Tuple
 
 from src.fdtd.config import FDTDConfig, RickerSource, MU0, EPS0
@@ -290,12 +291,12 @@ class FDTD2D_TMz:
         """Méthode simplifiée : énergie du champ diffusé dans la zone SF."""
         return _compute_backscatter_energy(self.Ez, self.cfg)
 
-    def get_physical_fields(self) -> Tuple[np.ndarray, np.ndarray]:
+    def get_physical_fields(self) -> Tuple[numpy.ndarray, numpy.ndarray]:
         """Retourne Ez et pec_mask dans la grille physique (sans PML)."""
         n = self.cfg.n_pml
         ez_phys = self.Ez[n:n+self.cfg.nx, n:n+self.cfg.ny].copy()
         pec_phys = self.pec_mask[n:n+self.cfg.nx, n:n+self.cfg.ny].copy()
-        return ez_phys, pec_phys
+        return to_numpy(ez_phys), to_numpy(pec_phys)
 
     def compute_bistatic_rcs(self, n_angles: int = 360) -> Tuple[np.ndarray, np.ndarray]:
         """Calcule la RCS bistatique pour n_angles directions."""

@@ -2,7 +2,7 @@
 Initialisation des couches CPML (Convolutional Perfectly Matched Layer).
 """
 
-import numpy as np
+from src.utils.xp import xp as np
 from src.fdtd.config import EPS0, ETA0
 
 

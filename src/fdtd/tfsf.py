@@ -2,7 +2,7 @@
 Fonctions TFSF (Total-Field / Scattered-Field).
 """
 
-import numpy as np
+from src.utils.xp import xp as np
 from typing import Tuple
 from src.fdtd.config import C0, ETA0
 
