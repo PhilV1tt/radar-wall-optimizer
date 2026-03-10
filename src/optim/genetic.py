@@ -718,21 +718,34 @@ class GeneticAlgorithm:
     # Boucle principale
     # ──────────────────────────────────────────────────────────────────────────
 
-    def run(self, verbose: bool = True) -> Individual:
-        """Lance l'optimisation et retourne le meilleur individu all-time."""
+    def run(self, verbose: bool = True,
+            checkpoint_fn=None) -> Individual:
+        """Lance l'optimisation et retourne le meilleur individu all-time.
+
+        Parameters
+        ----------
+        verbose :
+            Affiche la progression en temps réel (Rich).
+        checkpoint_fn :
+            Callable(gen, best_individual) appelé après chaque génération.
+            Permet de sauvegarder des checkpoints externes.
+        """
+        from src.utils.console import GADisplay
+
         cfg = self.cfg
         t0 = time.perf_counter()
 
-        if verbose:
-            self._print_header()
+        display = GADisplay(cfg) if verbose else None
+        if display:
+            display.start()
 
         # Initialisation par LHS
         self._initialize()
         self.population.sort()
         self._hof.update(self.population)
         self._record()
-        if verbose:
-            self._print_row(0, 0.0, False)
+        if display:
+            display.update(0, self.history, 0.0, False)
 
         for gen in range(cfg.n_generations):
             t_gen = time.perf_counter()
@@ -747,83 +760,29 @@ class GeneticAlgorithm:
 
             self._record()
 
-            if verbose:
-                self._print_row(gen + 1, time.perf_counter() - t_gen, restarted)
+            if display:
+                display.update(gen + 1, self.history,
+                               time.perf_counter() - t_gen, restarted)
+
+            if checkpoint_fn is not None and self._hof.best is not None:
+                checkpoint_fn(gen + 1, self._hof.best)
 
             # Arrêt anticipé
             if (cfg.fitness_threshold is not None
                     and self._hof.best is not None
                     and self._hof.best.fitness <= cfg.fitness_threshold):
-                if verbose:
-                    print(f"\n  Convergence (fitness ≤ {cfg.fitness_threshold:.2e})")
+                if display:
+                    display._progress.console.print(
+                        f"[green]  Convergence atteinte (fitness ≤ "
+                        f"{cfg.fitness_threshold:.2e})[/green]"
+                    )
                 break
 
         self._evaluator.close()
         elapsed = time.perf_counter() - t0
 
-        if verbose:
-            self._print_footer(elapsed)
+        if display:
+            display.finish(elapsed, self)
 
         return self._hof.best
 
-    # ──────────────────────────────────────────────────────────────────────────
-    # Affichage
-    # ──────────────────────────────────────────────────────────────────────────
-
-    def _print_header(self):
-        cfg = self.cfg
-        mut_info = (f"adaptatif 1/5 [η_m={cfg.eta_m:.0f}, "
-                    f"c={cfg.adaptation_factor}]"
-                    if cfg.adaptive_mutation
-                    else f"fixe [η_m={cfg.eta_m:.0f}]")
-        sel_info = (f"tournoi (k={cfg.tournament_size})"
-                    if cfg.selection == "tournament"
-                    else f"rang linéaire (s={cfg.rank_pressure})")
-        parallel = (f"multiprocessing ({cfg.n_workers} workers)"
-                    if cfg.n_workers > 1 else "séquentiel")
-
-        w = 90
-        print("=" * w)
-        print("  ALGORITHME GÉNÉTIQUE SCIENTIFIQUE — Optimisation mur anti-radar")
-        print("=" * w)
-        print(f"  Population     : {cfg.pop_size} individus  |  {cfg.n_generations} générations")
-        print(f"  Gènes          : {cfg.n_genes}  |  bornes [{cfg.gene_min}, {cfg.gene_max}]")
-        print(f"  Initialisation : Latin Hypercube Sampling ({cfg.pop_size} points × {cfg.n_genes} dim)")
-        print(f"  Croisement     : SBX  η_c={cfg.eta_c:.0f}  p_c={cfg.crossover_rate:.2f}  [Deb & Agrawal, 1995]")
-        print(f"  Mutation       : PM   {mut_info}  p_m={cfg.mutation_rate:.4f}  [Deb & Goyal, 1996]")
-        print(f"  Sélection      : {sel_info}  [Baker, 1985]")
-        print(f"  Élitisme       : {cfg.elite_count} élites  |  HOF : {cfg.n_hall_of_fame}")
-        print(f"  Redémarrage    : stagnation ({cfg.stagnation_window} gen)  |  div < {cfg.diversity_threshold:.3f}")
-        cache_str = f"oui ({cfg.cache_decimals} déc.)" if cfg.use_cache else "non"
-        print(f"  Cache          : {cache_str}  |  Évaluation : {parallel}")
-        print("-" * w)
-        print(f"  {'Gen':>4}  {'Best':>12}  {'Mean':>12}  {'Std':>10}  "
-              f"{'Div':>7}  {'η_m':>7}  {'Succ%':>6}  {'Evals':>7}  Info")
-        print("-" * w)
-
-    def _print_row(self, gen: int, dt: float, restarted: bool):
-        h = self.history
-        if not h["best_fitness"]:
-            return
-        info = "RESTART" if restarted else (f"{dt:.1f}s" if gen > 0 else "init")
-        sr = h["success_rate"][-1]
-        sr_str = f"{sr:.0%}" if not (isinstance(sr, float) and np.isnan(sr)) else "  N/A"
-        print(f"  {gen:>4}  {h['best_fitness'][-1]:>12.6e}  {h['mean_fitness'][-1]:>12.6e}  "
-              f"{h['std_fitness'][-1]:>10.3e}  {h['diversity'][-1]:>7.4f}  "
-              f"{h['eta_m'][-1]:>7.1f}  {sr_str:>6}  {h['n_evals'][-1]:>7}  {info}")
-
-    def _print_footer(self, elapsed: float):
-        best = self._hof.best
-        cache = self._eval_fn if isinstance(self._eval_fn, FitnessCache) else None
-        w = 90
-        print("-" * w)
-        print(f"  Durée totale      : {elapsed:.1f}s")
-        print(f"  Évaluations FDTD  : {self._n_evals}")
-        print(f"  Redémarrages      : {self._n_restarts}")
-        if cache:
-            print(f"  Cache             : {cache.hits} hits / {cache.misses} miss "
-                  f"({cache.hit_rate:.1%})")
-        if best:
-            print(f"  Meilleure fitness : {best.fitness:.6e}  "
-                  f"(gen {best.generation})")
-        print("=" * w)
