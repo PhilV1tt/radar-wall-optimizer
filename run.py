@@ -183,6 +183,26 @@ def preset_validate(args):
     os.execv(sys.executable, [sys.executable, str(script)])
 
 
+def preset_rapport(args):
+    """Rapport physique complet : validation + optimisation GA + figures — ~15 min."""
+    from src.utils.console import info, warn
+    script = Path(__file__).parent / "scripts" / "run_rapport.py"
+    if not script.exists():
+        warn(f"Script introuvable : {script}")
+        sys.exit(1)
+    info(f"Lancement de [bold]{script.name}[/] …")
+    extra = ["--seed", str(args.seed)] if args.seed is not None else ["--seed", "42"]
+    if args.out:
+        extra += ["--out", args.out]
+    if args.no_plots:
+        extra.append("--no-plots")
+    if args.workers:
+        extra += ["--workers", str(args.workers)]
+    if args.time:
+        extra += ["--time", str(args.time)]
+    os.execv(sys.executable, [sys.executable, str(script)] + extra)
+
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Sauvegarde & visualisation
 # ──────────────────────────────────────────────────────────────────────────────
@@ -262,7 +282,7 @@ def main():
     )
     parser.add_argument(
         "preset",
-        choices=["fast", "medium", "full", "validate"],
+        choices=["fast", "medium", "full", "validate", "rapport"],
         help="Preset de configuration",
     )
     parser.add_argument("--workers", type=int, default=None,
@@ -284,6 +304,7 @@ def main():
         "medium":   preset_medium,
         "full":     preset_full,
         "validate": preset_validate,
+        "rapport":  preset_rapport,
     }
     dispatch[args.preset](args)
 

@@ -22,10 +22,11 @@ def setup_style():
         'ytick.labelsize': 10,
         'legend.fontsize': 10,
         'figure.dpi': 150,
-        'savefig.dpi': 150,
+        'savefig.dpi': 300,
         'savefig.bbox': 'tight',
         'axes.grid': True,
         'grid.alpha': 0.3,
+        'mathtext.fontset': 'cm',
     })
 
 setup_style()
@@ -333,6 +334,165 @@ def plot_project_summary(sim_config, ga_history, rl_history,
     fig.suptitle('Optimisation de Géométrie de Mur Anti-Radar\nFDTD 2D + Machine Learning',
                  fontsize=15, fontweight='bold')
 
+    if save_path:
+        fig.savefig(save_path)
+        plt.close(fig)
+    return fig
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Figures physiques (rapport L3)
+# ──────────────────────────────────────────────────────────────────────────────
+
+def plot_field_physical(Ez: np.ndarray, pec_mask: np.ndarray,
+                         dx_mm: float, title: str = "Champ $E_z$",
+                         save_path: Optional[str] = None,
+                         vmax: Optional[float] = None):
+    """Snapshot du champ Ez avec axes en millimètres.
+
+    Paramètres
+    ----------
+    Ez : np.ndarray
+        Champ électrique (ny × nx après transposition interne).
+    pec_mask : np.ndarray
+        Masque booléen du conducteur parfait.
+    dx_mm : float
+        Résolution spatiale en millimètres.
+    """
+    fig, ax = plt.subplots(1, 1, figsize=(9, 7))
+
+    nx, ny = Ez.shape
+    extent = [0, nx * dx_mm, 0, ny * dx_mm]
+
+    if vmax is None:
+        vmax = max(abs(Ez).max(), 1e-10)
+
+    norm = TwoSlopeNorm(vmin=-vmax, vcenter=0, vmax=vmax)
+    im = ax.imshow(Ez.T, origin='lower', cmap='RdBu_r', norm=norm,
+                   aspect='equal', interpolation='bilinear', extent=extent)
+
+    pec_display = np.ma.masked_where(~pec_mask.T, np.ones_like(pec_mask.T, dtype=float))
+    ax.imshow(pec_display, origin='lower', cmap='Greys', alpha=0.8,
+              aspect='equal', vmin=0, vmax=1, extent=extent)
+
+    ax.set_xlabel('$x$ (mm)')
+    ax.set_ylabel('$y$ (mm)')
+    ax.set_title(title)
+    plt.colorbar(im, ax=ax, shrink=0.8, label=r'$E_z$ (V/m)')
+
+    if save_path:
+        fig.savefig(save_path)
+        plt.close(fig)
+    return fig
+
+
+def plot_rcs_polar_comparison(angles: np.ndarray,
+                               rcs_flat: np.ndarray,
+                               rcs_opt: np.ndarray,
+                               save_path: Optional[str] = None):
+    """Diagramme polaire bistatique : mur plat vs mur optimisé (en dB).
+
+    Paramètres
+    ----------
+    angles : np.ndarray
+        Angles en radians (0 à 2π).
+    rcs_flat : np.ndarray
+        RCS bistatique σ/λ du mur plat (linéaire).
+    rcs_opt : np.ndarray
+        RCS bistatique σ/λ du mur optimisé (linéaire).
+    """
+    fig, ax = plt.subplots(1, 1, figsize=(8, 8), subplot_kw={'projection': 'polar'})
+
+    rcs_flat_db = 10 * np.log10(np.maximum(rcs_flat, 1e-10))
+    rcs_opt_db = 10 * np.log10(np.maximum(rcs_opt, 1e-10))
+
+    ax.plot(angles, rcs_flat_db, 'k-', linewidth=1.5, label='Mur plat (référence)', alpha=0.8)
+    ax.plot(angles, rcs_opt_db,  'b-', linewidth=2.0, label='Mur optimisé (GA)')
+
+    # Marquer la direction de rétrodiffusion (φ = π, vers le radar)
+    ylims = ax.get_ylim()
+    ax.annotate('Rétrodiffusion\n(vers radar)', xy=(np.pi, ylims[1]),
+                fontsize=8, ha='center', color='darkgreen',
+                xytext=(np.pi, ylims[1] * 1.05))
+    ax.axvline(x=np.pi, color='darkgreen', linestyle=':', linewidth=1.0, alpha=0.6)
+
+    ax.set_title(r'SER bistatique $\sigma_{2D}/\lambda$ (dB)', pad=20, fontsize=13)
+    ax.legend(loc='upper right', bbox_to_anchor=(1.35, 1.1))
+
+    if save_path:
+        fig.savefig(save_path)
+        plt.close(fig)
+    return fig
+
+
+def plot_convergence_study(ppw_list: List[int],
+                            energy_values: List[float],
+                            save_path: Optional[str] = None):
+    """Énergie rétrodiffusée vs résolution spatiale.
+
+    Montre la convergence numérique en augmentant ppw.
+    La valeur se stabilise quand la résolution est suffisante.
+
+    Paramètres
+    ----------
+    ppw_list : List[int]
+        Résolutions testées (points par longueur d'onde).
+    energy_values : List[float]
+        Énergie rétrodiffusée (∑Ez²) pour chaque résolution.
+    """
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    ax.plot(ppw_list, energy_values, 'bs-', linewidth=2, markersize=7,
+            label=r'FDTD ($\sum E_z^2$ zone SF)')
+    ax.set_xlabel(r'Résolution (pts/$\lambda$)')
+    ax.set_ylabel(r'Énergie rétrodiffusée $\sum E_z^2$ (u.a.)')
+    ax.set_title('Convergence en résolution spatiale — mur plat PEC')
+    ax.legend()
+
+    # Annotation de la zone convergeé
+    if len(energy_values) >= 3:
+        ref = energy_values[-1]
+        ax.axhline(y=ref, color='r', linestyle='--', linewidth=1, alpha=0.5,
+                   label='Valeur de référence (ppw max)')
+        ax.legend()
+
+    fig.tight_layout()
+    if save_path:
+        fig.savefig(save_path)
+        plt.close(fig)
+    return fig
+
+
+def plot_pml_convergence(n_pml_list: List[int],
+                          rcs_values: List[float],
+                          dx_mm: float,
+                          save_path: Optional[str] = None):
+    """SER FDTD vs épaisseur PML.
+
+    Paramètres
+    ----------
+    n_pml_list : List[int]
+        Épaisseurs PML testées en cellules.
+    rcs_values : List[float]
+        SER NTFF σ/λ pour chaque épaisseur.
+    dx_mm : float
+        Résolution spatiale en mm (pour axe secondaire en mm).
+    """
+    fig, ax1 = plt.subplots(figsize=(8, 5))
+
+    pml_mm = [n * dx_mm for n in n_pml_list]
+    ax1.plot(pml_mm, rcs_values, 'rs-', linewidth=2, markersize=7)
+    ax1.set_xlabel('Épaisseur PML (mm)')
+    ax1.set_ylabel(r'SER normalisée $\sigma_{2D}/\lambda$')
+    ax1.set_title('Convergence en épaisseur de PML — mur plat PEC')
+
+    ax2 = ax1.twiny()
+    ax2.set_xlim(ax1.get_xlim())
+    ax2.set_xticks(pml_mm)
+    ax2.set_xticklabels([str(n) for n in n_pml_list])
+    ax2.set_xlabel('Épaisseur PML (cellules)')
+
+    fig.tight_layout()
     if save_path:
         fig.savefig(save_path)
         plt.close(fig)

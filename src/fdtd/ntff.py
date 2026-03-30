@@ -183,6 +183,33 @@ def compute_backscatter_energy(Ez, cfg) -> float:
     return float(scattered_energy)
 
 
+def analytical_rcs_flat_strip_2d(wall_height_m: float, wavelength: float) -> float:
+    """RCS 2D normalisée d'une plaque PEC plate (Optique Physique, Balanis §11.3).
+
+    σ_2D / λ = 2w² / λ²   (incidence normale, polarisation TMz)
+
+    Retourne σ/λ (sans dimension, même normalisation que compute_rcs_backscatter).
+
+    Paramètres
+    ----------
+    wall_height_m : float
+        Hauteur physique du mur en mètres.
+    wavelength : float
+        Longueur d'onde en mètres.
+    """
+    return 2.0 * wall_height_m**2 / wavelength**2
+
+
+def compute_rcs_backscatter_db(dft_state, source, time_step, cfg) -> float:
+    """RCS monostatique normalisée en dB : 10·log10(σ/λ).
+
+    Utilise compute_rcs_backscatter() en interne.
+    """
+    import math
+    rcs = compute_rcs_backscatter(dft_state, source, time_step, cfg)
+    return 10.0 * math.log10(max(rcs, 1e-30))
+
+
 def compute_bistatic_rcs(dft_state, source, time_step, cfg,
                           n_angles=360) -> Tuple[np.ndarray, np.ndarray]:
     """Calcule la RCS bistatique pour n_angles directions via NTFF."""

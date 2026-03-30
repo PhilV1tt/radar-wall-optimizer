@@ -74,6 +74,29 @@ class FDTDConfig:
         self.nx_total = self.nx + 2 * self.n_pml
         self.ny_total = self.ny + 2 * self.n_pml
 
+    def physical_summary(self) -> str:
+        """Résumé des paramètres physiques en unités SI.
+
+        Retourne une chaîne multi-lignes formatée, adaptée à l'affichage
+        dans un rapport de physique ou en console.
+        """
+        import math
+        sc_limit = 1.0 / math.sqrt(2)
+        domain_x_mm = self.nx * self.dx * 1e3
+        domain_y_mm = self.ny * self.dx * 1e3
+        t_total_ns = self.n_steps * self.dt * 1e9
+        return (
+            f"  Fréquence       : {self.freq/1e9:.1f} GHz\n"
+            f"  Longueur d'onde : {self.wavelength*1e3:.2f} mm\n"
+            f"  Résolution      : {self.ppw} pts/λ  →  dx = {self.dx*1e3:.3f} mm\n"
+            f"  Pas de temps    : dt = {self.dt*1e12:.3f} ps\n"
+            f"  Courant         : Sc = {self.courant:.3f}  (limite CFL 2D = {sc_limit:.3f})\n"
+            f"  Domaine physique: {domain_x_mm:.1f} × {domain_y_mm:.1f} mm\n"
+            f"  Durée simulée   : {t_total_ns:.3f} ns  ({self.n_steps} pas)\n"
+            f"  PML             : {self.n_pml} cellules = {self.n_pml*self.dx*1e3:.2f} mm\n"
+            f"  Grille totale   : {self.nx_total} × {self.ny_total} cellules\n"
+        )
+
 
 class RickerSource:
     """Source de Ricker (dérivée seconde de Gaussienne).
