@@ -1,0 +1,272 @@
+\relax 
+\providecommand \babel@aux [2]{\global \let \babel@toc \@gobbletwo }
+\@nameuse{bbl@beforestart}
+\catcode `:\active 
+\catcode `;\active 
+\catcode `!\active 
+\catcode `?\active 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\babel@aux{french}{}
+\citation{Knott1993,Balanis2012}
+\citation{Taflove2005}
+\citation{Ufimtsev2007}
+\citation{Skolnik2001,Jenn1995}
+\citation{Chen2010}
+\citation{Haupt1995}
+\citation{RahmatSamii1999}
+\citation{Michielssen1993,Weile1997}
+\citation{Hansen2001}
+\citation{Hansen2006}
+\citation{Williams1992}
+\citation{Peters2008}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction et contexte}{5}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{5}{Introduction et contexte}{section.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}La Section Efficace Radar~: définition et enjeux}{5}{subsection.1.1}\protected@file@percent }
+\newlabel{eq:rcs-3d}{{1}{5}{La Section Efficace Radar~: définition et enjeux}{equation.1}{}}
+\newlabel{eq:rcs-2d-def}{{2}{5}{La Section Efficace Radar~: définition et enjeux}{equation.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}État de l'art}{5}{subsection.1.2}\protected@file@percent }
+\citation{Jackson1999,Griffiths1999}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Contributions de ce travail}{6}{subsection.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4}Plan du rapport}{6}{subsection.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Fondements théoriques}{6}{section.2}\protected@file@percent }
+\newlabel{sec:theo}{{2}{6}{Fondements théoriques}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Électromagnétisme classique~: équations de Maxwell}{6}{subsection.2.1}\protected@file@percent }
+\newlabel{ssec:maxwell}{{2.1}{6}{Électromagnétisme classique~: équations de Maxwell}{subsection.2.1}{}}
+\citation{Yee1966}
+\newlabel{eq:faraday}{{3}{7}{Électromagnétisme classique~: équations de Maxwell}{equation.3}{}}
+\newlabel{eq:ampere}{{4}{7}{Électromagnétisme classique~: équations de Maxwell}{equation.4}{}}
+\newlabel{eq:gauss-e}{{5}{7}{Électromagnétisme classique~: équations de Maxwell}{equation.5}{}}
+\newlabel{eq:gauss-b}{{6}{7}{Électromagnétisme classique~: équations de Maxwell}{equation.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Polarisation TMz en 2D}{7}{subsection.2.2}\protected@file@percent }
+\newlabel{ssec:tmz}{{2.2}{7}{Polarisation TMz en 2D}{subsection.2.2}{}}
+\newlabel{eq:tmz-hx}{{7}{7}{Polarisation TMz en 2D}{equation.7}{}}
+\newlabel{eq:tmz-hy}{{8}{7}{Polarisation TMz en 2D}{equation.8}{}}
+\newlabel{eq:tmz-ez}{{9}{7}{Polarisation TMz en 2D}{equation.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Discrétisation de Yee~: dérivation complète}{7}{subsection.2.3}\protected@file@percent }
+\newlabel{ssec:yee}{{2.3}{7}{Discrétisation de Yee~: dérivation complète}{subsection.2.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.1}Grille de Yee staggerée}{7}{subsubsection.2.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Grille de Yee 2D en polarisation TMz. Les cercles rouges représentent la composante ${E_z}$ (n\oe uds entiers), les losanges verts ${H_x}$ (décalés d'un demi-pas selon $y$), et les triangles bleus ${H_y}$ (décalés d'un demi-pas selon $x$). L'algorithme de mise à jour «~leapfrog~» alterne demi-pas temporels entre $\bm  {H}$ et ${E_z}$.}}{8}{figure.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:yee-grid}{{1}{8}{Grille de Yee 2D en polarisation TMz. Les cercles rouges représentent la composante $\Ez $ (n\oe uds entiers), les losanges verts $\Hx $ (décalés d'un demi-pas selon $y$), et les triangles bleus $\Hy $ (décalés d'un demi-pas selon $x$). L'algorithme de mise à jour «~leapfrog~» alterne demi-pas temporels entre $\vH $ et $\Ez $}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}Dérivation des équations de mise à jour}{8}{subsubsection.2.3.2}\protected@file@percent }
+\newlabel{eq:disc-hx-raw}{{10}{8}{Dérivation des équations de mise à jour}{equation.10}{}}
+\newlabel{eq:yee-hx}{{11}{8}{Dérivation des équations de mise à jour}{equation.11}{}}
+\citation{Taflove2005}
+\newlabel{eq:yee-hy}{{12}{9}{Dérivation des équations de mise à jour}{equation.12}{}}
+\newlabel{eq:yee-ez}{{13}{9}{Dérivation des équations de mise à jour}{equation.13}{}}
+\newlabel{eq:yee-ca-cb}{{14}{9}{Dérivation des équations de mise à jour}{equation.14}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {1}{\ignorespaces Coefficients de mise à jour FDTD (src/fdtd/core.py -- simplifiés)}}{9}{lstlisting.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.3}Algorithme leapfrog}{9}{subsubsection.2.3.3}\protected@file@percent }
+\citation{CuPy2017}
+\citation{Courant1928,Taflove2005}
+\citation{Berenger1994}
+\citation{Roden2000}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.4}Complexité computationnelle}{10}{subsubsection.2.3.4}\protected@file@percent }
+\newlabel{eq:complexity-fdtd}{{15}{10}{Complexité computationnelle}{equation.15}{}}
+\newlabel{eq:complexity-ga}{{16}{10}{Complexité computationnelle}{equation.16}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Stabilité numérique~: condition CFL}{10}{subsection.2.4}\protected@file@percent }
+\newlabel{ssec:cfl}{{2.4}{10}{Stabilité numérique~: condition CFL}{subsection.2.4}{}}
+\newlabel{eq:cfl}{{17}{10}{Stabilité numérique~: condition CFL}{equation.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Couche absorbante CPML}{10}{subsection.2.5}\protected@file@percent }
+\newlabel{ssec:pml}{{2.5}{10}{Couche absorbante CPML}{subsection.2.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.1}Principe}{10}{subsubsection.2.5.1}\protected@file@percent }
+\citation{Taflove2005}
+\citation{Umashankar1982,Merewether1980}
+\newlabel{eq:cpml-stretch}{{18}{11}{Principe}{equation.18}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.2}Profil de conductivité}{11}{subsubsection.2.5.2}\protected@file@percent }
+\newlabel{eq:cpml-sigma}{{19}{11}{Profil de conductivité}{equation.19}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Profil de conductivité CPML normalisé $\sigma (d)/\sigma _{\rm  max} = d^m$. L'ordre $m=3$ assure une montée progressive pour minimiser les réflexions numériques à l'interface intérieure.}}{11}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:cpml-profile}{{2}{11}{Profil de conductivité CPML normalisé $\sigma (d)/\sigma _{\rm max} = d^m$. L'ordre $m=3$ assure une montée progressive pour minimiser les réflexions numériques à l'interface intérieure}{figure.caption.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.3}Coefficients CPML et champs auxiliaires}{11}{subsubsection.2.5.3}\protected@file@percent }
+\newlabel{eq:cpml-b}{{20}{11}{Coefficients CPML et champs auxiliaires}{equation.20}{}}
+\newlabel{eq:cpml-a}{{21}{11}{Coefficients CPML et champs auxiliaires}{equation.21}{}}
+\newlabel{eq:cpml-psi}{{22}{11}{Coefficients CPML et champs auxiliaires}{equation.22}{}}
+\citation{Taflove2005,Balanis2005}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Source par technique TFSF}{12}{subsection.2.6}\protected@file@percent }
+\newlabel{ssec:tfsf}{{2.6}{12}{Source par technique TFSF}{subsection.2.6}{}}
+\newlabel{eq:tfsf-oblique}{{23}{12}{Source par technique TFSF}{equation.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Structure du domaine de calcul FDTD. La zone grise extérieure est la couche CPML (\SI {12}{cellules}). La frontière TFSF (tirets bleus) sépare la zone champ-total (intérieur) de la zone champ-diffusé (extérieur). La surface de Huygens (pointillés verts) est utilisée pour le calcul NTFF. Le mur PEC est positionné dans la zone TF.}}{12}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:tfsf}{{3}{12}{Structure du domaine de calcul FDTD. La zone grise extérieure est la couche CPML (\SI {12}{cellules}). La frontière TFSF (tirets bleus) sépare la zone champ-total (intérieur) de la zone champ-diffusé (extérieur). La surface de Huygens (pointillés verts) est utilisée pour le calcul NTFF. Le mur PEC est positionné dans la zone TF}{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7}Source Ricker}{12}{subsection.2.7}\protected@file@percent }
+\newlabel{ssec:ricker}{{2.7}{12}{Source Ricker}{subsection.2.7}{}}
+\newlabel{eq:ricker}{{24}{12}{Source Ricker}{equation.24}{}}
+\citation{Taflove2005}
+\citation{Balanis2012}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.8}Transformation champ proche--champ lointain (NTFF)}{13}{subsection.2.8}\protected@file@percent }
+\newlabel{ssec:ntff}{{2.8}{13}{Transformation champ proche--champ lointain (NTFF)}{subsection.2.8}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.8.1}Accumulation DFT}{13}{subsubsection.2.8.1}\protected@file@percent }
+\newlabel{eq:ntff-dft}{{26}{13}{Accumulation DFT}{equation.26}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.8.2}Calcul du champ lointain}{13}{subsubsection.2.8.2}\protected@file@percent }
+\newlabel{eq:ntff-ezfar}{{27}{13}{Calcul du champ lointain}{equation.27}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.8.3}SER monostatique 2D}{13}{subsubsection.2.8.3}\protected@file@percent }
+\newlabel{eq:rcs-2d}{{28}{13}{SER monostatique 2D}{equation.28}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.8.4}Référence analytique (Optique Physique)}{13}{subsubsection.2.8.4}\protected@file@percent }
+\newlabel{eq:rcs-po}{{29}{13}{Référence analytique (Optique Physique)}{equation.29}{}}
+\citation{McKay1979}
+\citation{Deb1995}
+\citation{DebGoyal1996}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.9}Algorithme génétique (AG)}{14}{subsection.2.9}\protected@file@percent }
+\newlabel{ssec:ga}{{2.9}{14}{Algorithme génétique (AG)}{subsection.2.9}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.1}Encodage chromosomique et espace de recherche}{14}{subsubsection.2.9.1}\protected@file@percent }
+\newlabel{eq:fitness}{{30}{14}{Encodage chromosomique et espace de recherche}{equation.30}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.2}Initialisation~: Latin Hypercube Sampling (LHS)}{14}{subsubsection.2.9.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.3}Sélection par tournoi}{14}{subsubsection.2.9.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.4}Croisement SBX (Simulated Binary Crossover)}{14}{subsubsection.2.9.4}\protected@file@percent }
+\newlabel{eq:sbx-pdf}{{31}{14}{Croisement SBX (Simulated Binary Crossover)}{equation.31}{}}
+\newlabel{eq:sbx-children}{{32}{14}{Croisement SBX (Simulated Binary Crossover)}{equation.32}{}}
+\citation{Rechenberg1973}
+\citation{Hansen2001,Hansen2006}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.5}Mutation polynomiale}{15}{subsubsection.2.9.5}\protected@file@percent }
+\newlabel{eq:pm-pdf}{{33}{15}{Mutation polynomiale}{equation.33}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.6}Adaptation~: règle du $\frac  {1}{5}$ de Rechenberg}{15}{subsubsection.2.9.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.7}Élitisme et Hall of Fame}{15}{subsubsection.2.9.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.8}Diversité et relance (\textit  {restart})}{15}{subsubsection.2.9.8}\protected@file@percent }
+\newlabel{eq:diversity}{{34}{15}{Diversité et relance (\textit {restart})}{equation.34}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.10}CMA-ES~: Adaptation de la Matrice de Covariance}{15}{subsection.2.10}\protected@file@percent }
+\newlabel{ssec:cmaes}{{2.10}{15}{CMA-ES~: Adaptation de la Matrice de Covariance}{subsection.2.10}{}}
+\newlabel{eq:cmaes-sample}{{35}{15}{CMA-ES~: Adaptation de la Matrice de Covariance}{equation.35}{}}
+\citation{Hansen2001}
+\citation{Williams1992,Sutton2018}
+\citation{Sutton2018}
+\newlabel{eq:cmaes-cov}{{36}{16}{CMA-ES~: Adaptation de la Matrice de Covariance}{equation.36}{}}
+\newlabel{eq:cmaes-sigma}{{37}{16}{CMA-ES~: Adaptation de la Matrice de Covariance}{equation.37}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.11}REINFORCE~: gradient de politique}{16}{subsection.2.11}\protected@file@percent }
+\newlabel{ssec:rl}{{2.11}{16}{REINFORCE~: gradient de politique}{subsection.2.11}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.11.1}Formalisation du problème d'optimisation EM comme MDP}{16}{subsubsection.2.11.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.11.2}Policy gradient theorem}{16}{subsubsection.2.11.2}\protected@file@percent }
+\newlabel{eq:rl-objective}{{38}{16}{Policy gradient theorem}{equation.38}{}}
+\newlabel{eq:policy-gradient}{{39}{16}{Policy gradient theorem}{equation.39}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.11.3}Réduction de variance par baseline}{16}{subsubsection.2.11.3}\protected@file@percent }
+\newlabel{eq:rl-baseline}{{40}{16}{Réduction de variance par baseline}{equation.40}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.11.4}Mise à jour de politique}{17}{subsubsection.2.11.4}\protected@file@percent }
+\newlabel{eq:rl-grad-logpi}{{41}{17}{Mise à jour de politique}{equation.41}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Méthodologie}{17}{section.3}\protected@file@percent }
+\newlabel{sec:methodo}{{3}{17}{Méthodologie}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Espace de conception~: paramétrage du profil de mur}{17}{subsection.3.1}\protected@file@percent }
+\newlabel{eq:wall-interp}{{42}{17}{Espace de conception~: paramétrage du profil de mur}{equation.42}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Paramétrage du profil de surface du mur PEC. Les $N_s = 7$ points de contrôle (cercles rouges) définissent les déplacements latéraux ; l'interpolation linéaire génère le profil continu (bleu). Le déplacement maximum est $d_{\rm  max} = 10$ cellules de part et d'autre de la position nominale (tirets gris).}}{17}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:wall-param}{{4}{17}{Paramétrage du profil de surface du mur PEC. Les $N_s = 7$ points de contrôle (cercles rouges) définissent les déplacements latéraux ; l'interpolation linéaire génère le profil continu (bleu). Le déplacement maximum est $d_{\rm max} = 10$ cellules de part et d'autre de la position nominale (tirets gris)}{figure.caption.5}{}}
+\citation{CuPy2017}
+\citation{Harris2020}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Fonction objectif}{18}{subsection.3.2}\protected@file@percent }
+\newlabel{ssec:fitness}{{3.2}{18}{Fonction objectif}{subsection.3.2}{}}
+\newlabel{eq:fitness-detail}{{43}{18}{Fonction objectif}{equation.43}{}}
+\newlabel{eq:fitness-multi}{{44}{18}{Fonction objectif}{equation.44}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Pipeline d'optimisation}{18}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Implémentation}{18}{section.4}\protected@file@percent }
+\newlabel{sec:impl}{{4}{18}{Implémentation}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Architecture logicielle}{18}{subsection.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Pipeline d'optimisation complet. L'algorithme génétique effectue une recherche globale ; CMA-ES raffine localement depuis la meilleure solution GA ; REINFORCE explore de façon indépendante. Le meilleur profil est post-évalué par NTFF pour obtenir la SER bistatique.}}{19}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:pipeline}{{5}{19}{Pipeline d'optimisation complet. L'algorithme génétique effectue une recherche globale ; CMA-ES raffine localement depuis la meilleure solution GA ; REINFORCE explore de façon indépendante. Le meilleur profil est post-évalué par NTFF pour obtenir la SER bistatique}{figure.caption.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Paramètres de simulation FDTD}{19}{subsection.4.2}\protected@file@percent }
+\newlabel{ssec:fdtd-params}{{4.2}{19}{Paramètres de simulation FDTD}{subsection.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Paramètres de l'algorithme génétique}{19}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Paramètres CMA-ES et REINFORCE}{19}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Extrait d'implémentation commenté}{19}{subsection.4.5}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {2}{\ignorespaces Boucle principale de l'algorithme génétique (src/optim/genetic.py -- extraits simplifiés)}}{19}{lstlisting.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Paramètres FDTD de la simulation principale (preset \texttt  {full}).}}{20}{table.caption.7}\protected@file@percent }
+\newlabel{tab:fdtd-params}{{1}{20}{Paramètres FDTD de la simulation principale (preset \texttt {full})}{table.caption.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Hyperparamètres de l'algorithme génétique.}}{20}{table.caption.8}\protected@file@percent }
+\newlabel{tab:ga-params}{{2}{20}{Hyperparamètres de l'algorithme génétique}{table.caption.8}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Hyperparamètres CMA-ES et REINFORCE.}}{20}{table.caption.9}\protected@file@percent }
+\newlabel{tab:cmaes-rl-params}{{3}{20}{Hyperparamètres CMA-ES et REINFORCE}{table.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Validation numérique}{21}{subsection.4.6}\protected@file@percent }
+\newlabel{ssec:validation}{{4.6}{21}{Validation numérique}{subsection.4.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Convergence en résolution spatiale.}{21}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Convergence en épaisseur PML.}{21}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Résultats}{21}{section.5}\protected@file@percent }
+\newlabel{sec:resultats}{{5}{21}{Résultats}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Référence~: mur plat}{21}{subsection.5.1}\protected@file@percent }
+\newlabel{ssec:res-baseline}{{5.1}{21}{Référence~: mur plat}{subsection.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Évolution temporelle du champ $E_z$ pour le mur plat de référence. De gauche à droite et de haut en bas~: $t = 50\Delta t$, $150\Delta t$, $250\Delta t$, $349\Delta t$. L'onde plane incidente venant de la gauche génère une forte rétrodiffusion (lobe rouge/bleu visible à gauche du mur).}}{22}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:baseline-snapshots}{{6}{22}{Évolution temporelle du champ $E_z$ pour le mur plat de référence. De gauche à droite et de haut en bas~: $t = 50\dt $, $150\dt $, $250\dt $, $349\dt $. L'onde plane incidente venant de la gauche génère une forte rétrodiffusion (lobe rouge/bleu visible à gauche du mur)}{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Comparaison avec la référence analytique}{22}{subsubsection.5.1.1}\protected@file@percent }
+\newlabel{eq:rcs-po-num}{{45}{22}{Comparaison avec la référence analytique}{equation.45}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Convergence du GA}{22}{subsection.5.2}\protected@file@percent }
+\newlabel{ssec:res-ga-conv}{{5.2}{22}{Convergence du GA}{subsection.5.2}{}}
+\citation{Deb2002}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Champ $E_z$ final ($t = T_{\rm  final}$) pour le mur plat. Les lobes rouge et bleu à gauche du mur visualisent l'énergie rétrodiffusée mesurée par la fonction objectif~\eqref  {eq:fitness}.}}{23}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:baseline-final}{{7}{23}{Champ $E_z$ final ($t = T_{\rm final}$) pour le mur plat. Les lobes rouge et bleu à gauche du mur visualisent l'énergie rétrodiffusée mesurée par la fonction objectif~\eqref {eq:fitness}}{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Profil de mur optimal}{23}{subsection.5.3}\protected@file@percent }
+\newlabel{ssec:res-profile}{{5.3}{23}{Profil de mur optimal}{subsection.5.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Réduction de SER~: résultats quantitatifs}{23}{subsection.5.4}\protected@file@percent }
+\newlabel{ssec:res-quant}{{5.4}{23}{Réduction de SER~: résultats quantitatifs}{subsection.5.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Résultats de réduction de SER. $\mathcal  {E}_{\rm  retro}$ est l'énergie rétrodiffusée (unités arbitraires), $R_{\rm  dB} = 10\log _{10}(\mathcal  {E}_0/\mathcal  {E}_{\rm  opt})$ la réduction en dB.}}{23}{table.caption.18}\protected@file@percent }
+\newlabel{tab:results}{{4}{23}{Résultats de réduction de SER. $\mathcal {E}_{\rm retro}$ est l'énergie rétrodiffusée (unités arbitraires), $R_{\rm dB} = 10\log _{10}(\mathcal {E}_0/\mathcal {E}_{\rm opt})$ la réduction en dB}{table.caption.18}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Convergence de l'algorithme génétique. \textit  {Haut}~: courbe de convergence (échelle logarithmique) montrant la meilleure fitness (bleu) et la fitness moyenne de la population (orange) sur 126 générations. \textit  {Bas}~: heatmap de l'évolution du génome, visualisant l'exploration puis la convergence du profil.}}{24}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:ga-convergence}{{8}{24}{Convergence de l'algorithme génétique. \textit {Haut}~: courbe de convergence (échelle logarithmique) montrant la meilleure fitness (bleu) et la fitness moyenne de la population (orange) sur 126 générations. \textit {Bas}~: heatmap de l'évolution du génome, visualisant l'exploration puis la convergence du profil}{figure.caption.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Profil de surface du mur PEC optimisé (16 points de contrôle). Le motif en dents de scie \textit  {(sawtooth)} présente des dents d'amplitude $\approx d_{\rm  max}/2 = 10$ cellules et de période caractéristique $\approx \lambda /4 \approx 7$--$8$ cellules.}}{25}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:ga-profile}{{9}{25}{Profil de surface du mur PEC optimisé (16 points de contrôle). Le motif en dents de scie \textit {(sawtooth)} présente des dents d'amplitude $\approx d_{\rm max}/2 = 10$ cellules et de période caractéristique $\approx \lambda /4 \approx 7$--$8$ cellules}{figure.caption.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Champ $E_z$ final pour le mur optimisé (GA). Comparé à la figure~\ref {fig:baseline-final}, la rétrodiffusion vers la gauche est dramatiquement réduite~: l'onde est principalement diffractée dans des directions obliques et partiellement piégée dans les cavités du profil.}}{26}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:ga-field}{{10}{26}{Champ $E_z$ final pour le mur optimisé (GA). Comparé à la figure~\ref {fig:baseline-final}, la rétrodiffusion vers la gauche est dramatiquement réduite~: l'onde est principalement diffractée dans des directions obliques et partiellement piégée dans les cavités du profil}{figure.caption.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Évolution temporelle du champ $E_z$ pour le mur optimisé. On observe le piégeage de l'onde dans les cavités du profil et la diffusion angulaire qui redistribue l'énergie hors de la direction de rétrodiffusion.}}{27}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:ga-snapshots}{{11}{27}{Évolution temporelle du champ $E_z$ pour le mur optimisé. On observe le piégeage de l'onde dans les cavités du profil et la diffusion angulaire qui redistribue l'énergie hors de la direction de rétrodiffusion}{figure.caption.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Analyse de sensibilité}{27}{subsection.5.5}\protected@file@percent }
+\newlabel{ssec:sensitivity}{{5.5}{27}{Analyse de sensibilité}{subsection.5.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Robustesse angulaire.}{27}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Influence de $N_s$.}{27}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Taille de population.}{27}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Validation~: SER bistatique}{27}{subsection.5.6}\protected@file@percent }
+\newlabel{ssec:bistatic}{{5.6}{27}{Validation~: SER bistatique}{subsection.5.6}{}}
+\citation{Knott1993}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{28}{section.6}\protected@file@percent }
+\newlabel{sec:discussion}{{6}{28}{Discussion}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Interprétation physique du profil optimal}{28}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Comparaison des méthodes d'optimisation}{28}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Algorithme Génétique.}{28}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{CMA-ES.}{28}{section*.23}\protected@file@percent }
+\citation{Deb2002}
+\@writefile{toc}{\contentsline {paragraph}{REINFORCE.}{29}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Limites et hypothèses}{29}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Perspectives}{29}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{29}{section.7}\protected@file@percent }
+\newlabel{sec:conclusion}{{7}{29}{Conclusion}{section.7}{}}
+\citation{Berenger1994}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Dérivation complète des équations de Yee}{31}{appendix.A}\protected@file@percent }
+\newlabel{app:yee}{{A}{31}{Dérivation complète des équations de Yee}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Paramètres CPML détaillés}{31}{appendix.B}\protected@file@percent }
+\newlabel{app:cpml}{{B}{31}{Paramètres CPML détaillés}{appendix.B}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Paramètres CPML utilisés dans notre implémentation.}}{31}{table.caption.25}\protected@file@percent }
+\newlabel{tab:cpml-params}{{5}{31}{Paramètres CPML utilisés dans notre implémentation}{table.caption.25}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Extraits de code commentés}{31}{appendix.C}\protected@file@percent }
+\newlabel{app:code}{{C}{31}{Extraits de code commentés}{appendix.C}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3}{\ignorespaces Mise à jour CPML (src/fdtd/core.py -- extraits)}}{32}{lstlisting.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4}{\ignorespaces Calcul de la fitness (src/optim/fitness.py -- extraits)}}{32}{lstlisting.4}\protected@file@percent }
+\bibstyle{ieeetr}
+\bibdata{bibliography}
+\bibcite{Knott1993}{{1}{}{{}}{{}}}
+\bibcite{Balanis2012}{{2}{}{{}}{{}}}
+\bibcite{Taflove2005}{{3}{}{{}}{{}}}
+\bibcite{Ufimtsev2007}{{4}{}{{}}{{}}}
+\bibcite{Skolnik2001}{{5}{}{{}}{{}}}
+\bibcite{Jenn1995}{{6}{}{{}}{{}}}
+\bibcite{Chen2010}{{7}{}{{}}{{}}}
+\bibcite{Haupt1995}{{8}{}{{}}{{}}}
+\bibcite{RahmatSamii1999}{{9}{}{{}}{{}}}
+\bibcite{Michielssen1993}{{10}{}{{}}{{}}}
+\bibcite{Weile1997}{{11}{}{{}}{{}}}
+\bibcite{Hansen2001}{{12}{}{{}}{{}}}
+\bibcite{Hansen2006}{{13}{}{{}}{{}}}
+\bibcite{Williams1992}{{14}{}{{}}{{}}}
+\bibcite{Peters2008}{{15}{}{{}}{{}}}
+\bibcite{Jackson1999}{{16}{}{{}}{{}}}
+\bibcite{Griffiths1999}{{17}{}{{}}{{}}}
+\bibcite{Yee1966}{{18}{}{{}}{{}}}
+\bibcite{CuPy2017}{{19}{}{{}}{{}}}
+\bibcite{Courant1928}{{20}{}{{}}{{}}}
+\bibcite{Berenger1994}{{21}{}{{}}{{}}}
+\bibcite{Roden2000}{{22}{}{{}}{{}}}
+\bibcite{Umashankar1982}{{23}{}{{}}{{}}}
+\bibcite{Merewether1980}{{24}{}{{}}{{}}}
+\bibcite{Balanis2005}{{25}{}{{}}{{}}}
+\bibcite{McKay1979}{{26}{}{{}}{{}}}
+\bibcite{Deb1995}{{27}{}{{}}{{}}}
+\bibcite{DebGoyal1996}{{28}{}{{}}{{}}}
+\bibcite{Rechenberg1973}{{29}{}{{}}{{}}}
+\bibcite{Sutton2018}{{30}{}{{}}{{}}}
+\bibcite{Harris2020}{{31}{}{{}}{{}}}
+\bibcite{Deb2002}{{32}{}{{}}{{}}}
+\providecommand\NAT@force@numbers{}\NAT@force@numbers
+\gdef \@abspage@last{36}

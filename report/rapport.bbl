@@ -1,0 +1,153 @@
+\begin{thebibliography}{10}
+
+\bibitem{Knott1993}
+E.~F. Knott, J.~F. Shaeffer, and M.~T. Tuley, {\em Radar Cross Section}.
+\newblock Boston, MA: Artech House, 2nd~ed., 1993.
+
+\bibitem{Balanis2012}
+C.~A. Balanis, {\em Advanced Engineering Electromagnetics}.
+\newblock Hoboken, NJ: John Wiley \& Sons, 2nd~ed., 2012.
+
+\bibitem{Taflove2005}
+A.~Taflove and S.~C. Hagness, {\em Computational Electrodynamics: The
+  Finite-Difference Time-Domain Method}.
+\newblock Boston, MA: Artech House, 3rd~ed., 2005.
+
+\bibitem{Ufimtsev2007}
+P.~Y. Ufimtsev, {\em Fundamentals of the Physical Theory of Diffraction}.
+\newblock Hoboken, NJ: John Wiley \& Sons, 2007.
+
+\bibitem{Skolnik2001}
+M.~I. Skolnik, {\em Introduction to Radar Systems}.
+\newblock New York, NY: McGraw-Hill, 3rd~ed., 2001.
+
+\bibitem{Jenn1995}
+D.~C. Jenn, {\em Radar and Laser Cross Section Engineering}.
+\newblock Washington, DC: AIAA Education Series, 1995.
+
+\bibitem{Chen2010}
+H.~T. Chen, A.~J. Taylor, and N.~Yu, ``A review of metasurfaces: physics and
+  applications,'' {\em Reports on Progress in Physics}, vol.~79, no.~7,
+  p.~076401, 2016.
+
+\bibitem{Haupt1995}
+R.~L. Haupt, ``An introduction to genetic algorithms for electromagnetics,''
+  {\em IEEE Antennas and Propagation Magazine}, vol.~37, no.~2, pp.~7--15,
+  1995.
+
+\bibitem{RahmatSamii1999}
+Y.~Rahmat-Samii and E.~Michielssen, {\em Electromagnetic Optimization by
+  Genetic Algorithms}.
+\newblock New York, NY: John Wiley \& Sons, 1999.
+
+\bibitem{Michielssen1993}
+E.~Michielssen, J.-M. Sajer, S.~Ranjithan, and R.~Mittra, ``Design of
+  lightweight, broadband microwave absorbers using genetic algorithms,'' {\em
+  IEEE Transactions on Microwave Theory and Techniques}, vol.~41, no.~6,
+  pp.~1024--1031, 1993.
+
+\bibitem{Weile1997}
+D.~S. Weile and E.~Michielssen, ``Genetic algorithm optimization applied to
+  electromagnetics: a review,'' {\em IEEE Transactions on Antennas and
+  Propagation}, vol.~45, no.~3, pp.~343--353, 1997.
+
+\bibitem{Hansen2001}
+N.~Hansen and A.~Ostermeier, ``Completely derandomized self-adaptation in
+  evolution strategies,'' {\em Evolutionary Computation}, vol.~9, no.~2,
+  pp.~159--195, 2001.
+
+\bibitem{Hansen2006}
+N.~Hansen, ``The {CMA} evolution strategy: a comparing review,'' in {\em
+  Towards a New Evolutionary Computation} (J.~A. Lozano, P.~Larranaga, I.~Inza,
+  and E.~Bengoetxea, eds.), pp.~75--102, Springer, 2006.
+
+\bibitem{Williams1992}
+R.~J. Williams, ``Simple statistical gradient-following algorithms for
+  connectionist reinforcement learning,'' {\em Machine Learning}, vol.~8,
+  no.~3--4, pp.~229--256, 1992.
+
+\bibitem{Peters2008}
+J.~Peters and S.~Schaal, ``Reinforcement learning of motor skills with policy
+  gradients,'' {\em Neural Networks}, vol.~21, no.~4, pp.~682--697, 2008.
+
+\bibitem{Jackson1999}
+J.~D. Jackson, {\em Classical Electrodynamics}.
+\newblock New York, NY: John Wiley \& Sons, 3rd~ed., 1999.
+
+\bibitem{Griffiths1999}
+D.~J. Griffiths, {\em Introduction to Electrodynamics}.
+\newblock Upper Saddle River, NJ: Prentice Hall, 3rd~ed., 1999.
+
+\bibitem{Yee1966}
+K.~S. Yee, ``Numerical solution of initial boundary value problems involving
+  {M}axwell's equations in isotropic media,'' {\em IEEE Transactions on
+  Antennas and Propagation}, vol.~14, no.~3, pp.~302--307, 1966.
+
+\bibitem{CuPy2017}
+R.~Okuta, Y.~Unno, D.~Nishino, S.~Hido, and C.~Loomis, ``{C}u{P}y: A
+  {N}um{P}y-compatible library for {NVIDIA GPU} calculations,'' 2017.
+
+\bibitem{Courant1928}
+R.~Courant, K.~Friedrichs, and H.~Lewy, ``{\"U}ber die partiellen
+  {D}ifferenzengleichungen der mathematischen {P}hysik,'' {\em Mathematische
+  Annalen}, vol.~100, pp.~32--74, 1928.
+
+\bibitem{Berenger1994}
+J.-P. Bérenger, ``A perfectly matched layer for the absorption of
+  electromagnetic waves,'' {\em Journal of Computational Physics}, vol.~114,
+  no.~2, pp.~185--200, 1994.
+
+\bibitem{Roden2000}
+J.~A. Roden and S.~D. Gedney, ``Convolution {PML} ({CPML}): An efficient {FDTD}
+  implementation of the {CFS}--{PML} for arbitrary media,'' {\em Microwave and
+  Optical Technology Letters}, vol.~27, no.~5, pp.~334--339, 2000.
+
+\bibitem{Umashankar1982}
+K.~Umashankar and A.~Taflove, ``A novel method to analyze electromagnetic
+  scattering of complex objects,'' {\em IEEE Transactions on Electromagnetic
+  Compatibility}, vol.~24, no.~4, pp.~397--405, 1982.
+
+\bibitem{Merewether1980}
+D.~E. Merewether, R.~Fisher, and F.~W. Smith, ``On implementing a numeric
+  {H}uygens source scheme in a finite difference program to illuminate
+  scattering bodies,'' {\em IEEE Transactions on Nuclear Science}, vol.~27,
+  no.~6, pp.~1829--1833, 1980.
+
+\bibitem{Balanis2005}
+C.~A. Balanis, {\em Antenna Theory: Analysis and Design}.
+\newblock Hoboken, NJ: John Wiley \& Sons, 3rd~ed., 2005.
+
+\bibitem{McKay1979}
+M.~D. McKay, R.~J. Beckman, and W.~J. Conover, ``A comparison of three methods
+  for selecting values of input variables in the analysis of output from a
+  computer code,'' {\em Technometrics}, vol.~21, no.~2, pp.~239--245, 1979.
+
+\bibitem{Deb1995}
+K.~Deb and R.~B. Agrawal, ``Simulated binary crossover for continuous search
+  space,'' {\em Complex Systems}, vol.~9, no.~2, pp.~115--148, 1995.
+
+\bibitem{DebGoyal1996}
+K.~Deb and M.~Goyal, ``A combined genetic adaptive search ({G}ene{A}{S}) for
+  engineering design problems,'' Tech. Rep. 96001, Kanpur Genetic Algorithms
+  Laboratory (KanGAL), 1996.
+
+\bibitem{Rechenberg1973}
+I.~Rechenberg, {\em Evolutionsstrategie: Optimierung technischer Systeme nach
+  Prinzipien der biologischen Evolution}.
+\newblock Stuttgart: Frommann-Holzboog, 1973.
+
+\bibitem{Sutton2018}
+R.~S. Sutton and A.~G. Barto, {\em Reinforcement Learning: An Introduction}.
+\newblock Cambridge, MA: MIT Press, 2nd~ed., 2018.
+
+\bibitem{Harris2020}
+C.~R. Harris, K.~J. Millman, S.~J. van~der Walt, R.~Gommers, P.~Virtanen,
+  D.~Cournapeau, {\em et~al.}, ``Array programming with {N}um{P}y,'' {\em
+  Nature}, vol.~585, pp.~357--362, 2020.
+
+\bibitem{Deb2002}
+K.~Deb, A.~Pratap, S.~Agarwal, and T.~Meyarivan, ``A fast and elitist
+  multiobjective genetic algorithm: {NSGA-II},'' {\em IEEE Transactions on
+  Evolutionary Computation}, vol.~6, no.~2, pp.~182--197, 2002.
+
+\end{thebibliography}

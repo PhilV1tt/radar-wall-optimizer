@@ -1,0 +1,77 @@
+\babel@toc {french}{}\relax 
+\contentsline {section}{\numberline {1}Introduction et contexte}{5}{section.1}%
+\contentsline {subsection}{\numberline {1.1}La Section Efficace Radar~: définition et enjeux}{5}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}État de l'art}{5}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Contributions de ce travail}{6}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Plan du rapport}{6}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Fondements théoriques}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Électromagnétisme classique~: équations de Maxwell}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Polarisation TMz en 2D}{7}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Discrétisation de Yee~: dérivation complète}{7}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Grille de Yee staggerée}{7}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Dérivation des équations de mise à jour}{8}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}Algorithme leapfrog}{9}{subsubsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.4}Complexité computationnelle}{10}{subsubsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.4}Stabilité numérique~: condition CFL}{10}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Couche absorbante CPML}{10}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}Principe}{10}{subsubsection.2.5.1}%
+\contentsline {subsubsection}{\numberline {2.5.2}Profil de conductivité}{11}{subsubsection.2.5.2}%
+\contentsline {subsubsection}{\numberline {2.5.3}Coefficients CPML et champs auxiliaires}{11}{subsubsection.2.5.3}%
+\contentsline {subsection}{\numberline {2.6}Source par technique TFSF}{12}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Source Ricker}{12}{subsection.2.7}%
+\contentsline {subsection}{\numberline {2.8}Transformation champ proche--champ lointain (NTFF)}{13}{subsection.2.8}%
+\contentsline {subsubsection}{\numberline {2.8.1}Accumulation DFT}{13}{subsubsection.2.8.1}%
+\contentsline {subsubsection}{\numberline {2.8.2}Calcul du champ lointain}{13}{subsubsection.2.8.2}%
+\contentsline {subsubsection}{\numberline {2.8.3}SER monostatique 2D}{13}{subsubsection.2.8.3}%
+\contentsline {subsubsection}{\numberline {2.8.4}Référence analytique (Optique Physique)}{13}{subsubsection.2.8.4}%
+\contentsline {subsection}{\numberline {2.9}Algorithme génétique (AG)}{14}{subsection.2.9}%
+\contentsline {subsubsection}{\numberline {2.9.1}Encodage chromosomique et espace de recherche}{14}{subsubsection.2.9.1}%
+\contentsline {subsubsection}{\numberline {2.9.2}Initialisation~: Latin Hypercube Sampling (LHS)}{14}{subsubsection.2.9.2}%
+\contentsline {subsubsection}{\numberline {2.9.3}Sélection par tournoi}{14}{subsubsection.2.9.3}%
+\contentsline {subsubsection}{\numberline {2.9.4}Croisement SBX (Simulated Binary Crossover)}{14}{subsubsection.2.9.4}%
+\contentsline {subsubsection}{\numberline {2.9.5}Mutation polynomiale}{15}{subsubsection.2.9.5}%
+\contentsline {subsubsection}{\numberline {2.9.6}Adaptation~: règle du $\frac {1}{5}$ de Rechenberg}{15}{subsubsection.2.9.6}%
+\contentsline {subsubsection}{\numberline {2.9.7}Élitisme et Hall of Fame}{15}{subsubsection.2.9.7}%
+\contentsline {subsubsection}{\numberline {2.9.8}Diversité et relance (\textit {restart})}{15}{subsubsection.2.9.8}%
+\contentsline {subsection}{\numberline {2.10}CMA-ES~: Adaptation de la Matrice de Covariance}{15}{subsection.2.10}%
+\contentsline {subsection}{\numberline {2.11}REINFORCE~: gradient de politique}{16}{subsection.2.11}%
+\contentsline {subsubsection}{\numberline {2.11.1}Formalisation du problème d'optimisation EM comme MDP}{16}{subsubsection.2.11.1}%
+\contentsline {subsubsection}{\numberline {2.11.2}Policy gradient theorem}{16}{subsubsection.2.11.2}%
+\contentsline {subsubsection}{\numberline {2.11.3}Réduction de variance par baseline}{16}{subsubsection.2.11.3}%
+\contentsline {subsubsection}{\numberline {2.11.4}Mise à jour de politique}{17}{subsubsection.2.11.4}%
+\contentsline {section}{\numberline {3}Méthodologie}{17}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Espace de conception~: paramétrage du profil de mur}{17}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Fonction objectif}{18}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Pipeline d'optimisation}{18}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Implémentation}{18}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Architecture logicielle}{18}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Paramètres de simulation FDTD}{19}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Paramètres de l'algorithme génétique}{19}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Paramètres CMA-ES et REINFORCE}{19}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Extrait d'implémentation commenté}{19}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Validation numérique}{21}{subsection.4.6}%
+\contentsline {paragraph}{Convergence en résolution spatiale.}{21}{section*.10}%
+\contentsline {paragraph}{Convergence en épaisseur PML.}{21}{section*.11}%
+\contentsline {section}{\numberline {5}Résultats}{21}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Référence~: mur plat}{21}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}Comparaison avec la référence analytique}{22}{subsubsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.2}Convergence du GA}{22}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Profil de mur optimal}{23}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Réduction de SER~: résultats quantitatifs}{23}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Analyse de sensibilité}{27}{subsection.5.5}%
+\contentsline {paragraph}{Robustesse angulaire.}{27}{section*.19}%
+\contentsline {paragraph}{Influence de $N_s$.}{27}{section*.20}%
+\contentsline {paragraph}{Taille de population.}{27}{section*.21}%
+\contentsline {subsection}{\numberline {5.6}Validation~: SER bistatique}{27}{subsection.5.6}%
+\contentsline {section}{\numberline {6}Discussion}{28}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Interprétation physique du profil optimal}{28}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Comparaison des méthodes d'optimisation}{28}{subsection.6.2}%
+\contentsline {paragraph}{Algorithme Génétique.}{28}{section*.22}%
+\contentsline {paragraph}{CMA-ES.}{28}{section*.23}%
+\contentsline {paragraph}{REINFORCE.}{29}{section*.24}%
+\contentsline {subsection}{\numberline {6.3}Limites et hypothèses}{29}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Perspectives}{29}{subsection.6.4}%
+\contentsline {section}{\numberline {7}Conclusion}{29}{section.7}%
+\contentsline {section}{\numberline {A}Dérivation complète des équations de Yee}{31}{appendix.A}%
+\contentsline {section}{\numberline {B}Paramètres CPML détaillés}{31}{appendix.B}%
+\contentsline {section}{\numberline {C}Extraits de code commentés}{31}{appendix.C}%
