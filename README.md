@@ -229,6 +229,21 @@ La simulation utilise :
 
 ---
 
+## Rapport scientifique
+
+Le rapport complet (36 pages, style IEEE/arXiv) est disponible ici :
+**[📄 rapport.pdf](report/rapport.pdf)**
+
+Il couvre les fondements théoriques (FDTD, Yee, CPML, TFSF, NTFF), les trois algorithmes d'optimisation (GA, CMA-ES, REINFORCE), et les résultats obtenus (**93–94 % de réduction de SER** à 10 GHz).
+
+Pour le recompiler :
+```bash
+cd report
+pdflatex rapport && bibtex rapport && pdflatex rapport && pdflatex rapport
+```
+
+---
+
 ## Références scientifiques
 
 - **Yee, K.S.** (1966) — Algorithme FDTD original
