@@ -12,8 +12,8 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\textit{Optimisation de géométrie de mur anti-radar}}
-\fancyhead[R]{\small\textit{FDTD 2D + Algorithmes d'apprentissage}}
+\fancyhead[L]{\small\textit{Radar Wall Optimizer --- Rapport technique}}
+\fancyhead[R]{\small\textit{FDTD 2D + Algorithmes d'optimisation}}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 
@@ -129,8 +129,8 @@
 % ── Métadonnées ───────────────────────────────────────────────────────────────
 \title{
     \vspace{-1cm}
-    {\large\textsc{CY Cergy Paris Université} \\[2pt]
-     \textsc{Licence 3 — Physique, Parcours Physique Appliquée}}\\[1.5cm]
+    {\large\textsc{Radar Wall Optimizer} \\[2pt]
+     \textsc{Documentation technique du logiciel de simulation}}\\[1.5cm]
     {\LARGE\bfseries Optimisation de la géométrie d'un mur PEC\\
      par simulation électromagnétique FDTD 2D\\[4pt]
      et algorithmes d'apprentissage automatique}\\[0.8cm]
@@ -139,10 +139,9 @@
 }
 \author{
     \textbf{Philémon Vittet}\\[4pt]
-    \small CY Cergy Paris Université, UFR Sciences et Techniques\\
-    \small Département de Physique
+    \small ECE Paris
 }
-\date{Année universitaire 2025--2026\\[4pt]\today}
+\date{Avril 2026}
 
 
 \begin{document}
@@ -153,21 +152,26 @@
 
 \begin{abstract}
 \noindent
-Ce rapport présente une approche numérique pour la réduction de la Section Efficace
-Radar (SER) d'un mur métallique plan parfaitement conducteur (PEC), dans le contexte
-de la bande X radar (\SI{10}{\giga\hertz}). La simulation électromagnétique est
-réalisée par la méthode des différences finies dans le domaine temporel (FDTD 2D),
-en polarisation TMz, avec couche d'absorption CPML et injection de source par
-technique champ-total/champ-diffusé (TFSF). L'espace de conception est paramétré
-par $N_s = 14$--$16$ points de contrôle décrivant le profil de surface de la paroi.
-Trois méthodes d'optimisation sont comparées~: un algorithme génétique (GA) avec
-croisement SBX et mutation polynomiale, l'algorithme CMA-ES initialisé depuis le
-meilleur individu GA, et l'algorithme REINFORCE de gradient de politique. La fonction
-objectif mesure l'énergie rétrodiffusée calculée dans la zone de champ diffusé.
-Des réductions de SER supérieures à 90\,\% sont obtenues en incidence normale~;
-le profil optimal converge systématiquement vers une géométrie en dents de scie
-à pas de l'ordre de $\lambda/4$, dont la physique est discutée. Les études de
-convergence valident les paramètres numériques retenus.
+Ce document constitue le rapport technique du logiciel \textit{Radar Wall Optimizer},
+un outil de simulation et d'optimisation pour la réduction de la Section Efficace
+Radar (SER) d'un mur métallique parfaitement conducteur (PEC), dans le contexte
+de la bande X radar (\SI{10}{\giga\hertz}). Le logiciel intègre un simulateur
+électromagnétique complet par la méthode des différences finies dans le domaine
+temporel (FDTD 2D) en polarisation TMz, avec couche d'absorption CPML et injection
+de source par technique champ-total/champ-diffusé (TFSF). L'espace de conception
+est paramétré par $N_s = 14$--$16$ points de contrôle décrivant le profil de
+surface de la paroi. Trois méthodes d'optimisation sont implémentées et comparées~:
+un algorithme génétique (GA) avec croisement SBX et mutation polynomiale,
+l'algorithme CMA-ES initialisé depuis le meilleur individu GA, et l'algorithme
+REINFORCE de gradient de politique. La fonction objectif mesure l'énergie
+rétrodiffusée calculée dans la zone de champ diffusé. Des réductions de SER
+supérieures à 90\,\% sont obtenues en incidence normale~; le profil optimal
+converge systématiquement vers une géométrie en dents de scie à pas de l'ordre
+de $\lambda/4$, dont la physique est discutée.
+
+Ce rapport détaille les fondements théoriques, les choix d'implémentation
+et les résultats obtenus, en vue d'accompagner un projet de physique portant
+sur la furtivité radar.
 
 \smallskip
 \noindent\textbf{Mots-clés}~: Section Efficace Radar, FDTD, Algorithme Génétique,
@@ -221,9 +225,11 @@ adverses~\cite{Skolnik2001,Jenn1995}. Les techniques actuelles combinent~:
           des résonances locales~\cite{Chen2010}.
 \end{enumerate}
 
-Le présent projet s'inscrit dans la deuxième approche~: nous cherchons à déterminer
-numériquement la \textit{géométrie optimale} d'un mur PEC plan pour minimiser
-sa SER monostatique à \SI{10}{\giga\hertz} (bande X radar).
+Le logiciel \textit{Radar Wall Optimizer} s'inscrit dans la deuxième approche~: il
+permet de déterminer numériquement la \textit{géométrie optimale} d'un mur PEC plan
+pour minimiser sa SER monostatique à \SI{10}{\giga\hertz} (bande X radar). Il a été
+conçu comme outil de simulation et d'exploration pour accompagner un projet de
+physique portant sur la furtivité radar et l'optimisation électromagnétique.
 
 \subsection{État de l'art}
 
@@ -240,12 +246,12 @@ EM nécessitant une exploration guidée de l'espace de design~\cite{Peters2008}.
 
 \subsection{Contributions de ce travail}
 
-Les contributions principales de ce projet sont les suivantes~:
+Les contributions principales du logiciel sont les suivantes~:
 \begin{itemize}
     \item Implémentation d'un simulateur FDTD 2D TMz complet en Python, incluant
           CPML, source TFSF et transformation champ proche--champ lointain (NTFF)~;
-    \item Comparaison de trois algorithmes d'optimisation (GA, CMA-ES, REINFORCE)
-          sur un problème de minimisation de SER~;
+    \item Implémentation et comparaison de trois algorithmes d'optimisation
+          (GA, CMA-ES, REINFORCE) sur un problème de minimisation de SER~;
     \item Obtention d'une réduction de SER de $93$--$94\,\%$ en incidence normale à
           \SI{10}{\giga\hertz} pour $N_s = 14$ segments de contrôle~;
     \item Analyse physique du profil optimal et validation numérique par études
@@ -1459,13 +1465,13 @@ Ce travail comporte plusieurs simplifications importantes~:
 \label{sec:conclusion}
 % =============================================================================
 
-Dans ce projet, nous avons développé un outil numérique complet pour l'optimisation
-de la géométrie d'un mur PEC en vue de minimiser sa Section Efficace Radar à
-\SI{10}{\giga\hertz}. Le simulateur FDTD 2D TMz, avec source TFSF, couche absorbante
-CPML et transformation champ proche--champ lointain, a été validé par comparaison
-avec la référence analytique d'Optique Physique.
+Le logiciel \textit{Radar Wall Optimizer} constitue un outil numérique complet
+pour l'optimisation de la géométrie d'un mur PEC en vue de minimiser sa Section
+Efficace Radar à \SI{10}{\giga\hertz}. Le simulateur FDTD 2D TMz intégré, avec
+source TFSF, couche absorbante CPML et transformation champ proche--champ lointain,
+a été validé par comparaison avec la référence analytique d'Optique Physique.
 
-Trois algorithmes d'optimisation ont été implantés et comparés~: l'algorithme
+Trois algorithmes d'optimisation sont implémentés et comparés~: l'algorithme
 génétique avec opérateurs SBX et mutation polynomiale adaptative (règle de Rechenberg),
 l'algorithme CMA-ES en warm-start depuis la meilleure solution GA, et l'algorithme
 REINFORCE de gradient de politique. Le pipeline GA + CMA-ES s'est révélé le plus
@@ -1477,6 +1483,9 @@ de période $\approx \lambda/4$, dont la physique est expliquée par le piégeag
 de l'onde dans les cavités par interférence destructive et la redistribution
 angulaire de l'énergie diffusée.
 
+L'outil est pensé pour accompagner un projet de physique sur la furtivité radar~:
+il permet de visualiser les phénomènes de diffusion, d'explorer l'espace de design
+des géométries et de comprendre l'impact de chaque paramètre sur la SER.
 Les perspectives ouvertes --- extension 3D, large bande, co-optimisation RAM,
 deep RL --- montrent que cette approche est un point de départ prometteur pour
 la conception de structures furtives assistée par apprentissage automatique.
