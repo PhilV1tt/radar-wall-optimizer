@@ -1,5 +1,5 @@
 """
-Dashboard interactif — démo temps réel FDTD + GA.
+Dashboard interactif - démo temps réel FDTD + GA.
 """
 
 import numpy as np
@@ -33,7 +33,7 @@ def main():
     )
 
     print("╔══════════════════════════════════════════════════════════════╗")
-    print("║  DEMO TEMPS RÉEL — Optimisation de mur anti-radar          ║")
+    print("║  DEMO TEMPS RÉEL - Optimisation de mur anti-radar          ║")
     print("║  Ferme la fenêtre matplotlib pour arrêter                   ║")
     print("╚══════════════════════════════════════════════════════════════╝")
 
@@ -57,7 +57,7 @@ def main():
         for spine in ax.spines.values():
             spine.set_color('#333')
 
-    fig.suptitle('Optimisation de Mur Anti-Radar — Temps Réel',
+    fig.suptitle('Optimisation de Mur Anti-Radar - Temps Réel',
                  fontsize=16, fontweight='bold', color='white')
 
     plt.show()
@@ -71,7 +71,7 @@ def main():
         wall_thickness=WALL_THICKNESS,
         title="Phase 1 : Mur plat (baseline)", n_steps=300, frame_skip=4
     )
-    ax_field.set_title(f"Mur plat — RCS = {flat_energy:.1f}", fontsize=11,
+    ax_field.set_title(f"Mur plat - RCS = {flat_energy:.1f}", fontsize=11,
                        fontweight='bold', color='white')
     plt.pause(1.0)
 
@@ -121,7 +121,7 @@ def main():
         ax_profile.set_xlim(-1.3, 1.3)
         ax_profile.set_xlabel('Déplacement', color='white')
         ax_profile.set_ylabel('Position', color='white')
-        ax_profile.set_title(f'Profil du mur — Gen {gen+1}',
+        ax_profile.set_title(f'Profil du mur - Gen {gen+1}',
                              color='white', fontsize=11)
         ax_profile.legend(loc='upper right', fontsize=8,
                           facecolor='#16213e', edgecolor='#333',
@@ -140,7 +140,7 @@ def main():
                         alpha=0.5, label=f'Plat ({flat_energy:.0f})')
         ax_conv.set_xlabel('Génération', color='white')
         ax_conv.set_ylabel('RCS (énergie)', color='white')
-        ax_conv.set_title(f'Convergence — Réduction: {reduction:.1f}%',
+        ax_conv.set_title(f'Convergence - Réduction: {reduction:.1f}%',
                           color='#00ff88', fontsize=11, fontweight='bold')
         ax_conv.legend(loc='upper right', fontsize=8,
                        facecolor='#16213e', edgecolor='#333',
@@ -163,7 +163,7 @@ def main():
     )
 
     ax_field.set_title(
-        f"Mur optimal — RCS = {optimal_energy:.1f}  "
+        f"Mur optimal - RCS = {optimal_energy:.1f}  "
         f"(réduction {(1 - optimal_energy/flat_energy)*100:.0f}%)",
         fontsize=12, fontweight='bold', color='#00ff88'
     )

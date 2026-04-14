@@ -1,5 +1,5 @@
 """
-Apprentissage par Renforcement — REINFORCE avec baseline.
+Apprentissage par Renforcement - REINFORCE avec baseline.
 """
 
 import numpy as np
@@ -151,7 +151,7 @@ class RLOptimizer:
 
         if verbose:
             print("=" * 70)
-            print("REINFORCEMENT LEARNING — Optimisation de géométrie de mur anti-radar")
+            print("REINFORCEMENT LEARNING - Optimisation de géométrie de mur anti-radar")
             print("=" * 70)
             print(f"Épisodes: {cfg.n_episodes} | Steps/épisode: {cfg.steps_per_episode}")
             print(f"Rollouts: {cfg.n_rollouts} | LR: {cfg.learning_rate}")

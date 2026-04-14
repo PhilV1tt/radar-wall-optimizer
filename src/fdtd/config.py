@@ -47,7 +47,7 @@ class FDTDConfig:
     dx: float = field(init=False)
     dt: float = field(init=False)
     wavelength: float = field(init=False)
-    courant: float = 0.5  # Sc = c·dt/dx — bien en-dessous de 1/√2 ≈ 0.707
+    courant: float = 0.5  # Sc = c·dt/dx - bien en-dessous de 1/√2 ≈ 0.707
     n_steps: int = 500
 
     # PML

@@ -2,8 +2,8 @@
 Détection automatique du backend de calcul.
 
 Priorité :
-  1. CuPy  — GPU NVIDIA (CUDA)
-  2. NumPy — CPU (fallback universel : macOS Apple Silicon, CI, etc.)
+  1. CuPy  - GPU NVIDIA (CUDA)
+  2. NumPy - CPU (fallback universel : macOS Apple Silicon, CI, etc.)
 
 Usage dans les autres modules :
     from src.utils.xp import xp as np, to_numpy
@@ -21,7 +21,7 @@ try:
     if n_devices > 0:
         xp = _cupy
         GPU_AVAILABLE = True
-        BACKEND = f"CuPy (CUDA) — {n_devices} GPU(s)"
+        BACKEND = f"CuPy (CUDA) - {n_devices} GPU(s)"
     else:
         xp = _numpy
 except Exception:

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Radar Wall Optimizer — point d'entrée unifié.
+Radar Wall Optimizer - point d'entrée unifié.
 
 Presets
 -------
@@ -79,7 +79,7 @@ def _fdtd_cfg(nx, ny, n_steps, ppw=12):
 
 
 def preset_fast(args):
-    """GA rapide sur petite grille — ~3 min."""
+    """GA rapide sur petite grille - ~3 min."""
     from src.utils.console import console, info, success
     from src.optim.genetic import GeneticAlgorithm, GAConfig
     from src.optim.fitness import evaluate_wall
@@ -120,7 +120,7 @@ def preset_fast(args):
 
 
 def preset_medium(args):
-    """GA complet + visualisations — ~20 min."""
+    """GA complet + visualisations - ~20 min."""
     from src.utils.console import console, info, success
     from src.optim.genetic import GeneticAlgorithm, GAConfig
     from src.optim.fitness import evaluate_wall
@@ -163,7 +163,7 @@ def preset_medium(args):
 
 
 def preset_full(args):
-    """Pipeline complet GA + CMA-ES + RL — délègue à scripts/run_optimization.py."""
+    """Pipeline complet GA + CMA-ES + RL - délègue à scripts/run_optimization.py."""
     from src.utils.console import info, warn
     script = Path(__file__).parent / "scripts" / "run_optimization.py"
     if not script.exists():
@@ -174,7 +174,7 @@ def preset_full(args):
 
 
 def preset_validate(args):
-    """Tests physiques FDTD — ~5 min."""
+    """Tests physiques FDTD - ~5 min."""
     from src.utils.console import info
     script = Path(__file__).parent / "scripts" / "run_validation.py"
     if not script.exists():
@@ -213,7 +213,7 @@ def _plot_ga(outdir: Path, ga, fdtd_cfg, best, n_segments: int, tag: str):
     ax.semilogy(gens, ga.history["mean_fitness"], label="Moyenne pop.", lw=1, alpha=0.6)
     ax.set_xlabel("Génération")
     ax.set_ylabel("Fitness (énergie rétrodiffusée)")
-    ax.set_title(f"Convergence GA — preset {tag}")
+    ax.set_title(f"Convergence GA - preset {tag}")
     ax.legend()
     ax.grid(True, alpha=0.3)
     fig.tight_layout()
@@ -239,7 +239,7 @@ def _plot_ga(outdir: Path, ga, fdtd_cfg, best, n_segments: int, tag: str):
         axes[1].imshow(pec.T, origin="lower", cmap="Greys")
         axes[1].set_title("Géométrie du mur (PEC)")
 
-        fig.suptitle(f"Profil optimal — preset {tag}  |  fitness={best.fitness:.3e}")
+        fig.suptitle(f"Profil optimal - preset {tag}  |  fitness={best.fitness:.3e}")
         fig.tight_layout()
         p = outdir / f"field_{tag}.png"
         fig.savefig(p, dpi=150)

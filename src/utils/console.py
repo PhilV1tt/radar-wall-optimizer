@@ -54,7 +54,7 @@ class GADisplay:
         cfg = self._cfg
         from src.utils.xp import GPU_AVAILABLE
         if GPU_AVAILABLE:
-            parallel = "séquentiel (GPU — CUDA interdit avec fork)"
+            parallel = "séquentiel (GPU - CUDA interdit avec fork)"
         elif cfg.n_workers > 1:
             parallel = f"{cfg.n_workers} workers"
         else:
@@ -112,7 +112,7 @@ class GADisplay:
         )
         self._progress.start()
         self._task_id = self._progress.add_task(
-            desc_init, total=bar_total, best="—",
+            desc_init, total=bar_total, best="-",
         )
 
     def update(self, gen: int, history: dict, dt: float, restarted: bool):
@@ -129,7 +129,7 @@ class GADisplay:
         if best < self._best:
             self._best = best
 
-        sr_str = f"{sr:.0%}" if not math.isnan(sr) else "    —"
+        sr_str = f"{sr:.0%}" if not math.isnan(sr) else "    -"
         if restarted:
             info_str, style = "[bold yellow]RESTART[/bold yellow]", "yellow"
         elif gen == 0:

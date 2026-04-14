@@ -1,5 +1,5 @@
 """
-Fonctions de fitness — wrapper FDTD pour l'optimisation.
+Fonctions de fitness - wrapper FDTD pour l'optimisation.
 """
 
 import numpy as np

@@ -23,7 +23,7 @@ class CMAConfig:
 
 
 class CMAES:
-    """CMA-ES — adapte la matrice de covariance et le pas σ automatiquement."""
+    """CMA-ES - adapte la matrice de covariance et le pas σ automatiquement."""
 
     def __init__(self, config: CMAConfig, fitness_fn: Callable[[np.ndarray], float]):
         self.cfg = config
@@ -137,7 +137,7 @@ class CMAES:
 
         if verbose:
             print("=" * 70)
-            print("CMA-ES — Optimisation de géométrie de mur anti-radar")
+            print("CMA-ES - Optimisation de géométrie de mur anti-radar")
             print("=" * 70)
             print(f"Dimension: {self.n} | λ={self.lam} | μ={self.mu} | σ₀={cfg.sigma0}")
             mode = f"multiprocessing ({cfg.n_workers} workers)" if cfg.n_workers > 1 else "séquentiel"

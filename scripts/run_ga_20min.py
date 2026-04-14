@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Optimisation GA uniquement — ~20 min sur serveur 32 cœurs.
+Optimisation GA uniquement - ~20 min sur serveur 32 cœurs.
 Toute la puissance de calcul est dédiée à l'algorithme génétique.
 """
 
@@ -87,14 +87,14 @@ def run_baseline():
     plot_field_snapshots_grid(snapshots,
                               save_path=os.path.join(OUTPUT_DIR, "01_baseline_snapshots.png"))
     plot_field_snapshot(ez_phys, pec_phys,
-                        title=f"Champ Ez — Mur plat (t={FDTD_CFG.n_steps}Δt)",
+                        title=f"Champ Ez - Mur plat (t={FDTD_CFG.n_steps}Δt)",
                         save_path=os.path.join(OUTPUT_DIR, "02_baseline_final.png"))
     return flat_fitness
 
 
 def run_ga():
     print("\n" + "=" * 70)
-    print(f"PHASE 2 : Algorithme Génétique — {N_WORKERS} workers, {len(INCIDENCE_ANGLES)} angles")
+    print(f"PHASE 2 : Algorithme Génétique - {N_WORKERS} workers, {len(INCIDENCE_ANGLES)} angles")
     print(f"  Population: {GA_CFG.pop_size} | Générations: {GA_CFG.n_generations}")
     print("=" * 70)
 
@@ -120,7 +120,7 @@ def run_ga():
 
     ez_phys, pec_phys = sim.get_physical_fields()
     plot_field_snapshot(ez_phys, pec_phys,
-                        title="Champ Ez — Mur GA optimal",
+                        title="Champ Ez - Mur GA optimal",
                         save_path=os.path.join(OUTPUT_DIR, "05_ga_field.png"))
     plot_field_snapshots_grid(snapshots,
                               save_path=os.path.join(OUTPUT_DIR, "05b_ga_snapshots.png"))
@@ -130,7 +130,7 @@ def run_ga():
 
 def main():
     print("╔════════════════════════════════════════════════════════════════════╗")
-    print("║  OPTIMISATION GA — SERVEUR 32 CŒURS — ~20 min                    ║")
+    print("║  OPTIMISATION GA - SERVEUR 32 CŒURS - ~20 min                    ║")
     print("╠════════════════════════════════════════════════════════════════════╣")
     print(f"║  Fréquence  : {FDTD_CFG.freq/1e9:.0f} GHz | Grille : {FDTD_CFG.nx}x{FDTD_CFG.ny}               ║")
     print(f"║  Population : {GA_CFG.pop_size} | Générations : {GA_CFG.n_generations}                    ║")

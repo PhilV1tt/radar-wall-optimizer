@@ -142,7 +142,7 @@ def save_fdtd_animation(params, filename, title="", n_steps=350, fps=30):
 
 def main():
     print("╔════════════════════════════════════════════════════════════════════╗")
-    print("║  OPTIMISATION GA OVERNIGHT — MAC MINI 10 CŒURS                    ║")
+    print("║  OPTIMISATION GA OVERNIGHT - MAC MINI 10 CŒURS                    ║")
     print("╠════════════════════════════════════════════════════════════════════╣")
     print(f"║  Fréquence  : {FDTD_CFG.freq/1e9:.0f} GHz | Grille : {FDTD_CFG.nx}x{FDTD_CFG.ny}               ║")
     print(f"║  Population : {GA_CFG.pop_size} | Générations : {GA_CFG.n_generations}                  ║")
@@ -174,12 +174,12 @@ def main():
     plot_field_snapshots_grid(snapshots,
                               save_path=os.path.join(OUTPUT_DIR, "01_baseline_snapshots.png"))
     plot_field_snapshot(ez_phys, pec_phys,
-                        title="Champ Ez — Mur plat",
+                        title="Champ Ez - Mur plat",
                         save_path=os.path.join(OUTPUT_DIR, "02_baseline_final.png"))
 
     # --- GA ---
     print("\n" + "=" * 70)
-    print(f"PHASE 2 : Algorithme Génétique — {GA_CFG.pop_size} pop, "
+    print(f"PHASE 2 : Algorithme Génétique - {GA_CFG.pop_size} pop, "
           f"{GA_CFG.n_generations} gens, {N_WORKERS} workers")
     print("=" * 70)
 
@@ -204,7 +204,7 @@ def main():
 
     ez_phys, pec_phys = sim.get_physical_fields()
     plot_field_snapshot(ez_phys, pec_phys,
-                        title="Champ Ez — Mur GA optimal",
+                        title="Champ Ez - Mur GA optimal",
                         save_path=os.path.join(OUTPUT_DIR, "05_ga_field.png"))
     plot_field_snapshots_grid(snapshots,
                               save_path=os.path.join(OUTPUT_DIR, "05b_ga_snapshots.png"))

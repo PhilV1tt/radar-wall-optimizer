@@ -1,5 +1,5 @@
 """
-Classe FDTD2D_TMz allégée — importe depuis config, pml, tfsf, materials, ntff.
+Classe FDTD2D_TMz allégée - importe depuis config, pml, tfsf, materials, ntff.
 """
 
 import numpy

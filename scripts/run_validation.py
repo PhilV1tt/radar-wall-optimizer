@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Tests de validation physique — convergence grille et absorption PML.
+Tests de validation physique - convergence grille et absorption PML.
 """
 
 import sys
@@ -42,7 +42,7 @@ def test_grid_convergence():
 
 
 def test_pml_absorption():
-    """Test d'absorption PML — énergie résiduelle après propagation."""
+    """Test d'absorption PML - énergie résiduelle après propagation."""
     print("\n" + "=" * 60)
     print("Test d'absorption PML")
     print("=" * 60)

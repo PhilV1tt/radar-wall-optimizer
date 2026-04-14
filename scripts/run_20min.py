@@ -27,7 +27,7 @@ from src.viz import (
 )
 
 # ==============================================================================
-# Configuration — calibrée pour ~20 minutes sur 32 cœurs
+# Configuration - calibrée pour ~20 minutes sur 32 cœurs
 # ==============================================================================
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results")
@@ -115,7 +115,7 @@ def run_baseline():
     plot_field_snapshots_grid(snapshots,
                               save_path=os.path.join(OUTPUT_DIR, "01_baseline_snapshots.png"))
     plot_field_snapshot(ez_phys, pec_phys,
-                        title=f"Champ Ez — Mur plat (t={FDTD_CFG.n_steps}Δt)",
+                        title=f"Champ Ez - Mur plat (t={FDTD_CFG.n_steps}Δt)",
                         save_path=os.path.join(OUTPUT_DIR, "02_baseline_final.png"))
 
     return flat_fitness, sim
@@ -141,7 +141,7 @@ def run_ga_optimization():
 
     ez_phys, pec_phys = sim.get_physical_fields()
     plot_field_snapshot(ez_phys, pec_phys,
-                        title="Champ Ez — Mur GA optimal",
+                        title="Champ Ez - Mur GA optimal",
                         save_path=os.path.join(OUTPUT_DIR, "05_ga_field.png"))
 
     return best, ga.history
@@ -167,7 +167,7 @@ def run_cma_optimization(ga_best_genome=None):
 
     ez_phys, pec_phys = sim.get_physical_fields()
     plot_field_snapshot(ez_phys, pec_phys,
-                        title="Champ Ez — Mur CMA-ES optimal",
+                        title="Champ Ez - Mur CMA-ES optimal",
                         save_path=os.path.join(OUTPUT_DIR, "05b_cma_field.png"))
 
     return best_params, cma.best_fitness, cma.history
@@ -193,7 +193,7 @@ def run_rl_optimization():
 
     ez_phys, pec_phys = sim.get_physical_fields()
     plot_field_snapshot(ez_phys, pec_phys,
-                        title="Champ Ez — Mur RL optimal",
+                        title="Champ Ez - Mur RL optimal",
                         save_path=os.path.join(OUTPUT_DIR, "08_rl_field.png"))
 
     return best_genome, rl.best_fitness, rl.history
@@ -254,7 +254,7 @@ def run_comparison(flat_fitness, ga_best, ga_history,
 
 def main():
     print("╔════════════════════════════════════════════════════════════════════╗")
-    print("║  OPTIMISATION LONGUE DURÉE — APPLE M4 (10 CŒURS)                ║")
+    print("║  OPTIMISATION LONGUE DURÉE - APPLE M4 (10 CŒURS)                ║")
     print("║  FDTD 2D TMz + GA + CMA-ES + RL  (~20 min)                      ║")
     print("╠════════════════════════════════════════════════════════════════════╣")
     print(f"║  Fréquence radar : {FDTD_CFG.freq/1e9:.0f} GHz (bande X)                         ║")

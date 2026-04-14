@@ -1,5 +1,5 @@
 """
-Figures statiques — résultats FDTD et optimisation.
+Figures statiques - résultats FDTD et optimisation.
 """
 
 import numpy as np
@@ -137,7 +137,7 @@ def plot_ga_convergence(history: Dict, save_path: Optional[str] = None):
     ax1.fill_between(gens, history['best_fitness'], history['worst_fitness'],
                       alpha=0.1, color='green')
     ax1.set_xlabel('Génération')
-    ax1.set_ylabel('RCS (σ/λ) — log')
+    ax1.set_ylabel('RCS (σ/λ) - log')
     ax1.set_title('Convergence de l\'Algorithme Génétique')
     ax1.legend()
 
@@ -166,7 +166,7 @@ def plot_rl_convergence(history: Dict, save_path: Optional[str] = None):
 
     ax1.semilogy(eps, history['best_fitness'], 'r-', linewidth=2, label='Meilleure RCS')
     ax1.set_xlabel('Épisode')
-    ax1.set_ylabel('RCS (σ/λ) — log')
+    ax1.set_ylabel('RCS (σ/λ) - log')
     ax1.set_title('Convergence du Reinforcement Learning')
     ax1.legend()
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Démo temps réel — FDTD + Optimisation Génétique.
+Démo temps réel - FDTD + Optimisation Génétique.
 """
 
 import sys

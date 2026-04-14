@@ -4,5 +4,5 @@ rich>=13.0
 # Optionnel :
 # cma>=3.3      # Pour CMA-ES via la bibliothèque officielle
 # scipy>=1.11   # Pour des fonctions supplémentaires
-# cupy-cuda12x  # Accélération GPU NVIDIA (CUDA 12.x) — détecter auto via src/utils/xp.py
+# cupy-cuda12x  # Accélération GPU NVIDIA (CUDA 12.x) - détecter auto via src/utils/xp.py
 #               # Sur macOS Apple Silicon : non supporté, NumPy CPU utilisé à la place

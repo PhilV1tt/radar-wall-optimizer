@@ -1,5 +1,5 @@
 """
-Algorithme Génétique (GA) — implémentation scientifique.
+Algorithme Génétique (GA) - implémentation scientifique.
 
 Opérateurs
 ----------
@@ -15,13 +15,13 @@ Références
 ----------
 [LHS] McKay, M.D., Beckman, R.J. & Conover, W.J. (1979). A comparison of
       three methods for selecting values of input variables in the analysis
-      of output from a computer code. Technometrics, 21(2), 239–245.
+      of output from a computer code. Technometrics, 21(2), 239-245.
 [RK]  Baker, J.E. (1985). Adaptive selection methods for genetic algorithms.
-      Proc. 1st International Conference on Genetic Algorithms, 101–111.
+      Proc. 1st International Conference on Genetic Algorithms, 101-111.
 [SBX] Deb, K. & Agrawal, R.B. (1995). Simulated binary crossover for
-      continuous search space. Complex Systems, 9(2), 115–148.
+      continuous search space. Complex Systems, 9(2), 115-148.
 [PM]  Deb, K. & Goyal, M. (1996). A combined genetic adaptive search (GeneAS)
-      for engineering design. Computer Science and Informatics, 26(4), 30–45.
+      for engineering design. Computer Science and Informatics, 26(4), 30-45.
 [1/5] Rechenberg, I. (1973). Evolutionstrategie: Optimierung technischer
       Systeme nach Prinzipien der biologischen Evolution. Frommann-Holzboog.
 """
@@ -58,18 +58,18 @@ class GAConfig:
     tournament_size: int = 3
     rank_pressure: float = 1.5          # Pression sélective s ∈ [1.0, 2.0]
 
-    # ── Croisement — SBX (Deb & Agrawal, 1995) ────────────────────────────────
+    # ── Croisement - SBX (Deb & Agrawal, 1995) ────────────────────────────────
     crossover_rate: float = 0.9
     eta_c: float = 10.0                 # Indice de distribution SBX
                                         # faible → exploratoire, élevé → local
 
-    # ── Mutation — Polynomiale (Deb & Goyal, 1996) ────────────────────────────
+    # ── Mutation - Polynomiale (Deb & Goyal, 1996) ────────────────────────────
     mutation_rate: Optional[float] = None  # None → 1/n_genes (recommandé)
     eta_m: float = 20.0                 # Indice de distribution PM
     eta_m_min: float = 2.0
     eta_m_max: float = 200.0
 
-    # ── Adaptation σ — Règle 1/5 (Rechenberg, 1973) ───────────────────────────
+    # ── Adaptation σ - Règle 1/5 (Rechenberg, 1973) ───────────────────────────
     adaptive_mutation: bool = True
     adaptation_window: int = 30         # Fenêtre d'évaluation du taux de succès
     adaptation_factor: float = 0.85     # Facteur c de Rechenberg ∈ (0, 1)
@@ -130,7 +130,7 @@ class Individual:
 
 
 # ==============================================================================
-# Latin Hypercube Sampling — McKay et al. (1979)
+# Latin Hypercube Sampling - McKay et al. (1979)
 # ==============================================================================
 
 def latin_hypercube_sampling(n_samples: int, n_dims: int,
@@ -143,7 +143,7 @@ def latin_hypercube_sampling(n_samples: int, n_dims: int,
     de l'espace de recherche bien supérieure à un échantillonnage aléatoire
     uniforme (notamment pour des problèmes à grande dimension).
 
-    Référence : McKay, Beckman & Conover (1979), Technometrics, 21(2), 239–245.
+    Référence : McKay, Beckman & Conover (1979), Technometrics, 21(2), 239-245.
     """
     cut = np.linspace(0.0, 1.0, n_samples + 1)
     u = np.empty((n_samples, n_dims))
@@ -154,13 +154,13 @@ def latin_hypercube_sampling(n_samples: int, n_dims: int,
 
 
 # ==============================================================================
-# Croisement SBX — Deb & Agrawal (1995)
+# Croisement SBX - Deb & Agrawal (1995)
 # ==============================================================================
 
 def sbx_crossover(p1: np.ndarray, p2: np.ndarray,
                   eta_c: float, low: float, high: float,
                   rng: np.random.Generator) -> Tuple[np.ndarray, np.ndarray]:
-    """Simulated Binary Crossover (SBX) — version bornée.
+    """Simulated Binary Crossover (SBX) - version bornée.
 
     Mimique le croisement mono-point binaire dans l'espace continu. La
     probabilité de générer un enfant entre les parents est identique à celle
@@ -172,7 +172,7 @@ def sbx_crossover(p1: np.ndarray, p2: np.ndarray,
 
     Chaque gène est croisé indépendamment avec probabilité 0.5.
 
-    Référence : Deb & Agrawal (1995), Complex Systems, 9(2), 115–148.
+    Référence : Deb & Agrawal (1995), Complex Systems, 9(2), 115-148.
                 Deb (2001), Multi-Objective Optimization, Wiley, eq. 9.9.
     """
     n = len(p1)
@@ -213,7 +213,7 @@ def sbx_crossover(p1: np.ndarray, p2: np.ndarray,
 
 
 # ==============================================================================
-# Mutation Polynomiale — Deb & Goyal (1996)
+# Mutation Polynomiale - Deb & Goyal (1996)
 # ==============================================================================
 
 def polynomial_mutation(x: np.ndarray, eta_m: float,
@@ -280,7 +280,7 @@ def rank_select(population: List[Individual], pressure: float,
 
     s=1.0 → sélection uniforme, s=2.0 → pression maximale.
 
-    Référence : Baker (1985), Proc. 1st ICGA, 101–111.
+    Référence : Baker (1985), Proc. 1st ICGA, 101-111.
     """
     n = len(population)
     s = pressure
@@ -380,7 +380,7 @@ class ParallelEvaluator:
 
     Note : CuPy (GPU) est incompatible avec le fork multiprocessing
     (cudaErrorInitializationError). Quand GPU_AVAILABLE est True, on
-    bascule automatiquement en évaluation séquentielle — le GPU parallélise
+    bascule automatiquement en évaluation séquentielle - le GPU parallélise
     déjà les opérations matricielles internes.
     """
 
@@ -410,7 +410,7 @@ class ParallelEvaluator:
 
 
 # ==============================================================================
-# Hall of Fame — archive des N meilleurs individus all-time
+# Hall of Fame - archive des N meilleurs individus all-time
 # ==============================================================================
 
 class HallOfFame:
@@ -443,7 +443,7 @@ class HallOfFame:
 
 
 # ==============================================================================
-# Adaptation σ — Règle 1/5 de Rechenberg (1973)
+# Adaptation σ - Règle 1/5 de Rechenberg (1973)
 # ==============================================================================
 
 class OneFifthRule:
@@ -776,7 +776,7 @@ class GeneticAlgorithm:
             if checkpoint_fn is not None and self._hof.best is not None:
                 checkpoint_fn(gen + 1, self._hof.best)
 
-            # Arrêt anticipé — seuil de fitness
+            # Arrêt anticipé - seuil de fitness
             if (cfg.fitness_threshold is not None
                     and self._hof.best is not None
                     and self._hof.best.fitness <= cfg.fitness_threshold):
@@ -787,7 +787,7 @@ class GeneticAlgorithm:
                     )
                 break
 
-            # Arrêt anticipé — budget temps
+            # Arrêt anticipé - budget temps
             if (cfg.time_budget is not None
                     and time.perf_counter() - t0 >= cfg.time_budget):
                 if display:
