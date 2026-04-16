@@ -10,3 +10,16 @@ results/
 *.log
 .claude/
 CLAUDE_CODE_PROMPT.md
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex*.gz
+*.synctex(busy)
+report/rapport.fls
+report/rapport.synctex*
